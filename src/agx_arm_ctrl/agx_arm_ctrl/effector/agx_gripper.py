@@ -89,8 +89,8 @@ class AgxGripperWrapper:
             return None
         
         status = GripperStatus(
-            width=gs.msg.width,
-            force=gs.msg.force,
+            width=gs.msg.value * 1e-6,
+            force=gs.msg.force * 1e-3,
             voltage_too_low=gs.msg.foc_status.voltage_too_low,
             motor_overheating=gs.msg.foc_status.motor_overheating,
             driver_overcurrent=gs.msg.foc_status.driver_overcurrent,

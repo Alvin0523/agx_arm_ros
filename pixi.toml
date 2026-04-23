@@ -59,22 +59,25 @@ ros-humble-xacro = "*"
 scipy = "*"
 pybind11 = "*"
 
-# The following packages were not found:
-# ros-humble-warehouse-ros-mongo = "*"
 
 [pypi-dependencies]
 pyAgxArm = { path = "../pyAgxArm", editable = true }
 
 [tasks]
+# ROS2
 build = {cmd = "colcon build --symlink-install", description = "Build the ROS workspace"}
-test = {cmd = "colcon test", description = "Run tests for the workspace"}
-clean = {cmd = "rm -rf build install log", description = "Clean build artifacts (build, install, log directories)"}
-piper_moveit = {cmd = "ros2 launch agx_arm_ctrl start_single_agx_arm_moveit.launch.py can_port:=can2 arm_type:=piper effector_type:=agx_gripper", description = "piper_arm moveit"}
-piper_control = {cmd = "ros2 launch agx_arm_ctrl start_single_agx_arm_rviz.launch.py can_port:=can2 arm_type:=piper follow:=true control:=true", description = "piper_arm control"}
-chess = {cmd = "python3 test/pick_place_test.py", description = "play chess"}
+
+# Piper Start
+arm = {cmd = "ros2 launch agx_arm_ctrl start_single_agx_arm.launch.py can_port:=can2 arm_type:=piper effector_type:=agx_gripper tcp_offset:='[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]'", description = "arm ros no moveit no control"}
+piper_moveit = {cmd = "ros2 launch agx_arm_ctrl start_single_agx_arm_rviz.launch.py can_port:=can2 arm_type:=piper follow:=true control:=true", description = "real arm control and follow"}
+chess = { cmd = "python3 test/ai_film/pick_place.py --config test/ai_film/config.yaml", description = "play chess" }
+
+# Utils
 can = {cmd = "bash scripts/can_activate_can2.sh"}
+home = {cmd = 'ros2 service call /move_home std_srvs/srv/Empty', description = "arm going home"}
 down = {cmd = 'ros2 service call /enable_agx_arm std_srvs/srv/SetBool "{data: false}"', description = "arm down"}
-# Scripts to source on environment activation, found after first colcon build.
+pose = {cmd = 'ros2 topic echo /feedback/tcp_pose --once', description = "get pose"}
+
 
 [activation.env]
 ROS_DOMAIN_ID = "30"

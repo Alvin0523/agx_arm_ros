@@ -4437,7 +4437,7 @@ packages:
 - pypi: ../pyAgxArm
   name: pyagxarm
   version: 1.0.0
-  sha256: 710f327ababb9548cb9a12e11691a417ec1d7c179ab6a143f597e77a03674710
+  sha256: 4723cddf4e691ccfd22f0d3ee8902c4be0080005353b877c2b9a58c187766724
   requires_dist:
   - python-can>=3.3.4
   - typing-extensions>=3.7.4.3
