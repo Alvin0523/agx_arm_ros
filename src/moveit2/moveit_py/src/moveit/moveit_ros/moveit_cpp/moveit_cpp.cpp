@@ -36,7 +36,7 @@
 
 #include "moveit_cpp.hpp"
 #include <pybind11/pytypes.h>
-#include <rclcpp/logger.hpp>
+#include <moveit/utils/logger.hpp>
 #include <string>
 
 namespace moveit_py
@@ -45,7 +45,7 @@ namespace bind_moveit_cpp
 {
 rclcpp::Logger getLogger()
 {
-  return rclcpp::get_logger("moveit.py.cpp_initializer");
+  return moveit::getLogger("moveit.py.cpp_initializer");
 }
 
 std::shared_ptr<moveit_cpp::PlanningComponent>
@@ -156,17 +156,13 @@ void initMoveitPy(py::module& m)
            R"(
            Initialize moveit_cpp node and the planning scene service.
            )")
-      .def("execute", &moveit_cpp::MoveItCpp::execute, py::arg("group_name"), py::arg("robot_trajectory"),
-           py::arg("blocking") = true,
+      .def("execute",
+           py::overload_cast<const robot_trajectory::RobotTrajectoryPtr&, const std::vector<std::string>&>(
+               &moveit_cpp::MoveItCpp::execute),
+           py::arg("robot_trajectory"), py::arg("controllers"), py::call_guard<py::gil_scoped_release>(),
            R"(
-           Execute a trajectory for a specific planning group.
-           Args:
-               group_name (str): Name of the planning group.
-               robot_trajectory (RobotTrajectory): The trajectory to execute.
-               blocking (bool): Whether to block until execution finishes. Defaults to True.
-           Returns:
-               :py:class::`moveit_py.core.ExecutionStatus`: The status of the execution.
-           )")
+	   Execute a trajectory (planning group is inferred from robot trajectory object).
+	   )")
       .def("get_planning_component", &moveit_py::bind_moveit_cpp::getPlanningComponent,
            py::arg("planning_component_name"), py::return_value_policy::take_ownership,
            R"(

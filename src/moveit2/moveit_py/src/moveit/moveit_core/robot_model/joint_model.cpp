@@ -35,7 +35,7 @@
 /* Author: Jafar Uruç */
 
 #include "joint_model.hpp"
-#include <moveit/robot_model/joint_model.h>
+#include <moveit/robot_model/joint_model.hpp>
 
 namespace moveit_py
 {
