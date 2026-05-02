@@ -38,7 +38,7 @@
 #include <pybind11/stl.h>
 #include <moveit_py/moveit_py_utils/ros_msg_typecasters.hpp>
 #include <moveit_msgs/msg/robot_state.hpp>
-#include <moveit/robot_state/conversions.hpp>
+#include <moveit/robot_state/conversions.h>
 
 namespace moveit_py
 {

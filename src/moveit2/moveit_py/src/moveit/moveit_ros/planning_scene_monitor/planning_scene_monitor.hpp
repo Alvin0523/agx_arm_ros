@@ -14,7 +14,7 @@
  *     copyright notice, this list of conditions and the following
  *     disclaimer in the documentation and/or other materials provided
  *     with the distribution.
- *   * Neither the name of PickNik Inc. nor the names of its
+ *   * Neither the name of the copyright holder nor the names of its
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -43,7 +43,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <moveit_msgs/msg/planning_scene.hpp>
 #include <moveit_msgs/srv/apply_planning_scene.hpp>
-#include <moveit/planning_scene_monitor/planning_scene_monitor.hpp>
+#include <moveit/planning_scene_monitor/planning_scene_monitor.h>
 #include <moveit_py/moveit_py_utils/rclpy_time_typecaster.hpp>
 
 namespace py = pybind11;

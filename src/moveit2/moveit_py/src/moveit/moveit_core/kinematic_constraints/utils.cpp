@@ -37,7 +37,7 @@
 #include "utils.hpp"
 #include <rclcpp/rclcpp.hpp>
 #include <moveit_py/moveit_py_utils/ros_msg_typecasters.hpp>
-#include <moveit/kinematic_constraints/utils.hpp>
+#include <moveit/kinematic_constraints/utils.h>
 
 namespace moveit_py
 {

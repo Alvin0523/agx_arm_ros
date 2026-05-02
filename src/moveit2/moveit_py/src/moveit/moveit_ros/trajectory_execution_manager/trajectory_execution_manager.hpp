@@ -42,7 +42,7 @@
 #include <moveit_py/moveit_py_utils/copy_ros_msg.hpp>
 #include <moveit_py/moveit_py_utils/ros_msg_typecasters.hpp>
 #include <rclcpp/rclcpp.hpp>
-#include <moveit/trajectory_execution_manager/trajectory_execution_manager.hpp>
+#include <moveit/trajectory_execution_manager/trajectory_execution_manager.h>
 
 namespace py = pybind11;
 

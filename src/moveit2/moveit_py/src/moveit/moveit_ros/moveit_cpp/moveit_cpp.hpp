@@ -14,7 +14,7 @@
  *     copyright notice, this list of conditions and the following
  *     disclaimer in the documentation and/or other materials provided
  *     with the distribution.
- *   * Neither the name of PickNik Inc. nor the names of its
+ *   * Neither the name of the copyright holder nor the names of its
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -43,8 +43,8 @@
 #include <moveit_msgs/msg/robot_state.hpp>
 #include <moveit_msgs/msg/move_it_error_codes.h>
 #include <moveit_py/moveit_py_utils/ros_msg_typecasters.hpp>
-#include <moveit/moveit_cpp/moveit_cpp.hpp>
-#include <moveit/moveit_cpp/planning_component.hpp>
+#include <moveit/moveit_cpp/moveit_cpp.h>
+#include <moveit/moveit_cpp/planning_component.h>
 #include <rclcpp/rclcpp.hpp>
 
 #include "planning_component.hpp"

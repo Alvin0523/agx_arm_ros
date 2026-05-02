@@ -14,7 +14,7 @@
  *     copyright notice, this list of conditions and the following
  *     disclaimer in the documentation and/or other materials provided
  *     with the distribution.
- *   * Neither the name of PickNik Inc. nor the names of its
+ *   * Neither the name of the copyright holder nor the names of its
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -41,67 +41,19 @@ namespace moveit_py
 {
 namespace bind_planning_component
 {
-planning_interface::MotionPlanResponse
+moveit_cpp::PlanningComponent::PlanSolution
 plan(std::shared_ptr<moveit_cpp::PlanningComponent>& planning_component,
-     std::shared_ptr<moveit_cpp::PlanningComponent::PlanRequestParameters>& single_plan_parameters,
-     std::shared_ptr<moveit_cpp::PlanningComponent::MultiPipelinePlanRequestParameters>& multi_plan_parameters,
-     std::shared_ptr<planning_scene::PlanningScene>& planning_scene,
-     std::optional<const moveit::planning_pipeline_interfaces::SolutionSelectionFunction> solution_selection_function,
-     std::optional<moveit::planning_pipeline_interfaces::StoppingCriterionFunction> stopping_criterion_callback)
+     std::shared_ptr<moveit_cpp::PlanningComponent::PlanRequestParameters>& parameters)
 {
-  // parameter argument checking
-  if (single_plan_parameters && multi_plan_parameters)
-  {
-    throw std::invalid_argument("Cannot specify both single and multi plan parameters");
-  }
-
-  //  check whether single or multi pipeline
-  if (single_plan_parameters)
+  if (parameters)
   {
     // cast parameters
     std::shared_ptr<const moveit_cpp::PlanningComponent::PlanRequestParameters> const_single_plan_parameters =
-        std::const_pointer_cast<const moveit_cpp::PlanningComponent::PlanRequestParameters>(single_plan_parameters);
+        std::const_pointer_cast<const moveit_cpp::PlanningComponent::PlanRequestParameters>(parameters);
 
-    return planning_component->plan(*const_single_plan_parameters, planning_scene);
+    return planning_component->plan(*const_single_plan_parameters);
   }
-  else if (multi_plan_parameters)
-  {
-    // cast parameters
-    std::shared_ptr<const moveit_cpp::PlanningComponent::MultiPipelinePlanRequestParameters> const_multi_plan_parameters =
-        std::const_pointer_cast<const moveit_cpp::PlanningComponent::MultiPipelinePlanRequestParameters>(
-            multi_plan_parameters);
-
-    if (solution_selection_function && stopping_criterion_callback)
-    {
-      return planning_component->plan(*const_multi_plan_parameters, std::ref(*solution_selection_function),
-                                      *stopping_criterion_callback, planning_scene);
-    }
-    else if (solution_selection_function)
-    {
-      return planning_component->plan(*const_multi_plan_parameters, std::ref(*solution_selection_function), nullptr,
-                                      planning_scene);
-    }
-    else if (stopping_criterion_callback)
-    {
-      return planning_component->plan(*const_multi_plan_parameters,
-                                      moveit::planning_pipeline_interfaces::getShortestSolution,
-                                      *stopping_criterion_callback, planning_scene);
-    }
-    else
-    {
-      return planning_component->plan(*const_multi_plan_parameters,
-                                      moveit::planning_pipeline_interfaces::getShortestSolution, nullptr,
-                                      planning_scene);
-    }
-  }
-  else
-  {
-    if (planning_scene)
-    {
-      throw std::invalid_argument("Cannot specify planning scene without specifying plan parameters");
-    }
-    return planning_component->plan();
-  }
+  return planning_component->plan();
 }
 
 bool setGoal(std::shared_ptr<moveit_cpp::PlanningComponent>& planning_component,
@@ -194,6 +146,27 @@ bool setStartState(std::shared_ptr<moveit_cpp::PlanningComponent>& planning_comp
   }
 }
 
+moveit_msgs::msg::RobotState
+getMotionPlanSolutionStartState(std::shared_ptr<moveit_cpp::PlanningComponent::PlanSolution>& plan_solution)
+{
+  moveit_msgs::msg::RobotState robot_state_msg = plan_solution->start_state;
+  return robot_state_msg;
+}
+
+moveit_msgs::msg::MoveItErrorCodes
+getMotionPlanSolutionErrorCode(std::shared_ptr<moveit_cpp::PlanningComponent::PlanSolution>& plan_solution)
+{
+  moveit_msgs::msg::MoveItErrorCodes error_code_msg =
+      static_cast<moveit_msgs::msg::MoveItErrorCodes>(plan_solution->error_code);
+  return error_code_msg;
+}
+
+std::shared_ptr<robot_trajectory::RobotTrajectory>
+getMotionPlanSolutionTrajectory(std::shared_ptr<moveit_cpp::PlanningComponent::PlanSolution>& plan_solution)
+{
+  return plan_solution->trajectory;
+}
+
 void initPlanRequestParameters(py::module& m)
 {
   py::class_<moveit_cpp::PlanningComponent::PlanRequestParameters,
@@ -201,10 +174,10 @@ void initPlanRequestParameters(py::module& m)
                                                                                     R"(
                              Planner parameters provided with a MotionPlanRequest.
                              )")
-      .def(py::init([](std::shared_ptr<moveit_cpp::MoveItCpp>& moveit_cpp, const std::string& ns) {
+      .def(py::init([](std::shared_ptr<moveit_cpp::MoveItCpp>& moveit_cpp) {
         const rclcpp::Node::SharedPtr& node = moveit_cpp->getNode();
         moveit_cpp::PlanningComponent::PlanRequestParameters params;
-        params.load(node, ns);
+        params.load(node);
         return params;
       }))
       .def_readwrite("planner_id", &moveit_cpp::PlanningComponent::PlanRequestParameters::planner_id,
@@ -235,23 +208,6 @@ void initPlanRequestParameters(py::module& m)
                      )");
 }
 
-void initMultiPlanRequestParameters(py::module& m)
-{
-  py::class_<moveit_cpp::PlanningComponent::MultiPipelinePlanRequestParameters,
-             std::shared_ptr<moveit_cpp::PlanningComponent::MultiPipelinePlanRequestParameters>>(
-      m, "MultiPipelinePlanRequestParameters",
-      R"(
-                             Planner parameters provided with a MotionPlanRequest.
-                             )")
-      .def(py::init([](std::shared_ptr<moveit_cpp::MoveItCpp>& moveit_cpp,
-                       const std::vector<std::string>& planning_pipeline_names) {
-        const rclcpp::Node::SharedPtr& node = moveit_cpp->getNode();
-        moveit_cpp::PlanningComponent::MultiPipelinePlanRequestParameters params{ node, planning_pipeline_names };
-        return params;
-      }))
-      .def_readonly("multi_plan_request_parameters",
-                    &moveit_cpp::PlanningComponent::MultiPipelinePlanRequestParameters::plan_request_parameter_vector);
-}
 void initPlanningComponent(py::module& m)
 {
   py::class_<moveit_cpp::PlanningComponent, std::shared_ptr<moveit_cpp::PlanningComponent>>(m, "PlanningComponent",
@@ -329,9 +285,7 @@ void initPlanningComponent(py::module& m)
       // plan/execution methods
 
       // TODO (peterdavidfagan): improve the plan API
-      .def("plan", &moveit_py::bind_planning_component::plan, py::arg("single_plan_parameters") = nullptr,
-           py::arg("multi_plan_parameters") = nullptr, py::arg("planning_scene") = nullptr,
-           py::arg("solution_selection_function") = nullptr, py::arg("stopping_criterion_callback") = nullptr,
+      .def("plan", &moveit_py::bind_planning_component::plan, py::arg("parameters") = nullptr,
            py::return_value_policy::move,
            R"(
            Plan a motion plan using the current start and goal states.
@@ -368,6 +322,21 @@ void initPlanningComponent(py::module& m)
            R"(
            Remove the workspace bounding box from planning.
            )");
+}
+void initPlanSolution(py::module& m)
+{
+  py::class_<moveit_cpp::PlanningComponent::PlanSolution, moveit_cpp::PlanningComponent::PlanSolutionPtr>(
+      m, "PlanSolution", R"(
+    Represents a planning solution, including the trajectory and any error codes.)")
+      .def_property("start_state", &moveit_py::bind_planning_component::getMotionPlanSolutionStartState, nullptr,
+                    py::return_value_policy::copy, "The starting state used for planning.")
+      .def_property("trajectory", &moveit_py::bind_planning_component::getMotionPlanSolutionTrajectory, nullptr,
+                    py::return_value_policy::copy, "The resulting planned trajectory.")
+      .def_property("error_code", &moveit_py::bind_planning_component::getMotionPlanSolutionErrorCode, nullptr,
+                    py::return_value_policy::copy, "The MoveIt error code of the planning request.")
+      .def(
+          "__bool__", [](const moveit_cpp::PlanningComponent::PlanSolution& self) { return static_cast<bool>(self); },
+          "Return True if planning was successful.");
 }
 }  // namespace bind_planning_component
 }  // namespace moveit_py

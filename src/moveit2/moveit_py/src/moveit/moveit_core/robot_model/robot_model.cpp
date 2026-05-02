@@ -39,7 +39,7 @@
 #include <urdf_parser/urdf_parser.h>
 #include <srdfdom/model.h>
 #include <srdfdom/srdf_writer.h>
-#include <moveit/robot_model/robot_model.hpp>
+#include <moveit/robot_model/robot_model.h>
 
 namespace moveit_py
 {

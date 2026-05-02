@@ -9,7 +9,9 @@ find_package(moveit_ros_planning REQUIRED)
 find_package(moveit_ros_planning_interface REQUIRED)
 find_package(moveit_core REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+find_package(pybind11_vendor REQUIRED)
 find_package(pybind11 REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 # enables using the Python extensions from the build space for testing
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/test_moveit/__init__.py" "")
@@ -48,7 +50,8 @@ pybind11_add_module(
   src/moveit/moveit_core/robot_model/joint_model_group.cpp
   src/moveit/moveit_core/robot_model/robot_model.cpp
   src/moveit/moveit_core/robot_state/robot_state.cpp
-  src/moveit/moveit_core/robot_trajectory/robot_trajectory.cpp)
+  src/moveit/moveit_core/robot_trajectory/robot_trajectory.cpp
+)
 target_link_libraries(
   core
   PRIVATE moveit_ros_planning::moveit_cpp
@@ -60,7 +63,8 @@ target_link_libraries(
           moveit_core::moveit_utils
           moveit_core::moveit_robot_model
           moveit_core::moveit_robot_state
-          moveit_py_utils)
+          moveit_py_utils
+          )
 configure_build_install_location(core)
 
 pybind11_add_module(

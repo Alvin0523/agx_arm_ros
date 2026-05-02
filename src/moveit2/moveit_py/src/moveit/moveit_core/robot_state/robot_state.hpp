@@ -46,7 +46,7 @@
 #pragma GCC diagnostic pop
 #include <moveit_py/moveit_py_utils/copy_ros_msg.hpp>
 #include <tf2_eigen/tf2_eigen.hpp>
-#include <moveit/robot_state/robot_state.hpp>
+#include <moveit/robot_state/robot_state.h>
 
 namespace py = pybind11;
 

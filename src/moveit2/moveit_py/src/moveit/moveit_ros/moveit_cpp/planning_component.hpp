@@ -14,7 +14,7 @@
  *     copyright notice, this list of conditions and the following
  *     disclaimer in the documentation and/or other materials provided
  *     with the distribution.
- *   * Neither the name of PickNik Inc. nor the names of its
+ *   * Neither the name of the copyright holder nor the names of its
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -43,14 +43,15 @@
 #include <pybind11/functional.h>
 #include <moveit_py/moveit_py_utils/copy_ros_msg.hpp>
 #include <moveit_py/moveit_py_utils/ros_msg_typecasters.hpp>
-#include <moveit/moveit_cpp/moveit_cpp.hpp>
-#include <moveit/moveit_cpp/planning_component.hpp>
+#include <moveit/moveit_cpp/moveit_cpp.h>
+#include <moveit/moveit_cpp/planning_component.h>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <moveit_msgs/msg/constraints.hpp>
+#include <moveit_msgs/msg/move_it_error_codes.hpp>
+#include <moveit_msgs/msg/robot_state.hpp>
 
 #include "moveit_cpp.hpp"
 #include "../planning_scene_monitor/planning_scene_monitor.hpp"
-#include "../../moveit_core/planning_interface/planning_response.hpp"
 
 namespace py = pybind11;
 
@@ -58,13 +59,9 @@ namespace moveit_py
 {
 namespace bind_planning_component
 {
-planning_interface::MotionPlanResponse
+moveit_cpp::PlanningComponent::PlanSolution
 plan(std::shared_ptr<moveit_cpp::PlanningComponent>& planning_component,
-     std::shared_ptr<moveit_cpp::PlanningComponent::PlanRequestParameters>& single_plan_parameters,
-     std::shared_ptr<moveit_cpp::PlanningComponent::MultiPipelinePlanRequestParameters>& multi_plan_parameters,
-     std::shared_ptr<planning_scene::PlanningScene>& planning_scene,
-     std::optional<const moveit::planning_pipeline_interfaces::SolutionSelectionFunction> solution_selection_function,
-     std::optional<moveit::planning_pipeline_interfaces::StoppingCriterionFunction> stopping_criterion_callback);
+     std::shared_ptr<moveit_cpp::PlanningComponent::PlanRequestParameters>& parameters);
 
 bool setGoal(std::shared_ptr<moveit_cpp::PlanningComponent>& planning_component,
              std::optional<std::string> configuration_name, std::optional<moveit::core::RobotState> robot_state,
@@ -76,8 +73,17 @@ bool setStartState(std::shared_ptr<moveit_cpp::PlanningComponent>& planning_comp
 
 void initPlanRequestParameters(py::module& m);
 
-void initMultiPlanRequestParameters(py::module& m);
-
 void initPlanningComponent(py::module& m);
+
+moveit_msgs::msg::MoveItErrorCodes
+getMotionPlanSolutionErrorCode(std::shared_ptr<moveit_cpp::PlanningComponent::PlanSolution>& plan_solution);
+
+moveit_msgs::msg::RobotState
+getMotionPlanSolutionStartState(std::shared_ptr<moveit_cpp::PlanningComponent::PlanSolution>& plan_solution);
+
+std::shared_ptr<robot_trajectory::RobotTrajectory>
+getMotionPlanSolutionTrajectory(std::shared_ptr<moveit_cpp::PlanningComponent::PlanSolution>& plan_solution);
+
+void initPlanSolution(py::module& m);
 }  // namespace bind_planning_component
 }  // namespace moveit_py

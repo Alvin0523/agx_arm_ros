@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = "moveit_py"
-copyright = "2022, Peter David Fagan"
+copyright = "2022, Peter David Fagan; 2025"
 author = "Peter David Fagan"
 
 

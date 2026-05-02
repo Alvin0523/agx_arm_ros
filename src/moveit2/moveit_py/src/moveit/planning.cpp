@@ -43,14 +43,16 @@ PYBIND11_MODULE(planning, m)
 {
   m.doc() = "Python bindings for moveit_cpp functionalities.";
 
+  py::module_::import("moveit.core");
+
   // Provide custom function signatures
   py::options options;
   options.disable_function_signatures();
 
   // Construct module classes
   moveit_py::bind_planning_component::initPlanRequestParameters(m);
-  moveit_py::bind_planning_component::initMultiPlanRequestParameters(m);
   moveit_py::bind_planning_component::initPlanningComponent(m);
+  moveit_py::bind_planning_component::initPlanSolution(m);
   moveit_py::bind_planning_scene_monitor::initPlanningSceneMonitor(m);
   moveit_py::bind_planning_scene_monitor::initContextManagers(m);
   moveit_py::bind_trajectory_execution_manager::initTrajectoryExecutionManager(m);
