@@ -109,6 +109,7 @@ sequences:
  
   chess_loop:
     loop: true
+    count: 1       # 0 = infinite; any positive integer = run that many times
     steps:
       # Step 1: piece A: TL → TR
       - type: pick_place

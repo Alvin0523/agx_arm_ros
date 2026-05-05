@@ -58,10 +58,12 @@ ros-humble-topic-tools = "*"
 ros-humble-xacro = "*"
 scipy = "*"
 pybind11 = "*"
+numpy = "<2"
 
 
 [pypi-dependencies]
 pyAgxArm = { path = "../pyAgxArm", editable = true }
+acconeer-exptool = ">=7.2.0, <8"
 
 [tasks]
 # ROS2
@@ -69,15 +71,17 @@ build = {cmd = "colcon build --symlink-install", description = "Build the ROS wo
 
 # Piper Start
 arm = {cmd = "ros2 launch agx_arm_ctrl start_single_agx_arm.launch.py can_port:=can2 arm_type:=piper effector_type:=agx_gripper tcp_offset:='[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]'", description = "arm ros no moveit no control"}
-piper_moveit = {cmd = "ros2 launch agx_arm_ctrl start_single_agx_arm_rviz.launch.py can_port:=can2 arm_type:=piper follow:=true control:=true", description = "real arm control and follow"}
-chess = { cmd = "python3 test/ai_film/pick_place.py --config test/ai_film/config.yaml", description = "play chess" }
+piper_moveit = {cmd = "ros2 launch agx_arm_ctrl start_single_agx_arm_moveit.launch.py can_port:=can2 arm_type:=piper effector_type:=agx_gripper follow:=true control:=true", description = "real arm control and follow"}
+piper_rviz   = {cmd = "ros2 launch agx_arm_ctrl start_single_agx_arm_rviz.launch.py can_port:=can2 arm_type:=piper follow:=true control:=true", description = "arm with rviz (no MoveIt)"}
+chess = { cmd = "python3 ai_film/pick_place.py --config ai_film/config.yaml", description = "play chess" }
+ai_film = { cmd = "python3 ai_film/ai_film_main.py --config ai_film/config.yaml --sequence chess_loop", description = "sensor-driven arm: detect human → run sequence" }
 
 # Utils
 can = {cmd = "bash scripts/can_activate_can2.sh"}
 home = {cmd = 'ros2 service call /move_home std_srvs/srv/Empty', description = "arm going home"}
 down = {cmd = 'ros2 service call /enable_agx_arm std_srvs/srv/SetBool "{data: false}"', description = "arm down"}
 pose = {cmd = 'ros2 topic echo /feedback/tcp_pose --once', description = "get pose"}
-
+detect = {cmd = "python3 /home/orin0/tf_card/ai_film/agx_arm_ros/ai_film/detector_ros.py", description = "detect human"}
 
 [activation.env]
 ROS_DOMAIN_ID = "30"
