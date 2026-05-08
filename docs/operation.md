@@ -38,7 +38,7 @@ pixi run moveit
 pixi run detect
 
 # Terminal 4
-pixi run ai_film
+pixi run main
 ```
 
 See [sensor.md](sensor.md) for sensor hardware setup.
