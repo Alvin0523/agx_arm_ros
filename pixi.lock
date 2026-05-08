@@ -323,6 +323,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/linux-aarch64/qhull-2020.2-h70be974_5.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/qt-main-5.15.15-h912a755_7.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/qt6-main-6.10.2-h5343e53_4.conda
+      - conda: https://prefix.dev/conda-forge/linux-aarch64/rapidjson-1.1.0.post20240409-h5ad3122_2.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/rav1e-0.8.1-h9d4cc37_0.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/readline-8.3-hb682ff5_0.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/rhash-1.4.6-h86ecc28_1.conda
@@ -395,6 +396,7 @@ environments:
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-fastrtps-cmake-module-2.2.4-np2py312h61f2ce4_15.conda
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-filters-2.2.2-np2py312h61f2ce4_15.conda
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-foonathan-memory-vendor-1.2.0-np2py312h61f2ce4_15.conda
+      - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-foxglove-bridge-3.2.4-np2py312h61f2ce4_15.conda
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-generate-parameter-library-0.6.0-np2py312h8b5252a_15.conda
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-generate-parameter-library-py-0.6.0-np2py312h61f2ce4_15.conda
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-geometric-shapes-2.3.2-np2py312hde48450_15.conda
@@ -542,6 +544,7 @@ environments:
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-rosidl-typesupport-interface-3.1.8-np2py312h61f2ce4_15.conda
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-rosidl-typesupport-introspection-c-3.1.8-np2py312h61f2ce4_15.conda
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-rosidl-typesupport-introspection-cpp-3.1.8-np2py312h61f2ce4_15.conda
+      - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-rosx-introspection-1.0.2-np2py312h61f2ce4_15.conda
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-rpyutils-0.2.2-np2py312h61f2ce4_15.conda
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-rsl-1.2.0-np2py312hcab10f8_15.conda
       - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-rti-connext-dds-cmake-module-0.11.6-np2py312h61f2ce4_15.conda
@@ -671,9 +674,13 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/22/30/7cd8fdcdfbc5b869528b079bfb76dcdf6056b1a2097a662e5e8c04f42965/certifi-2026.4.22-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f8/e3/0fadc706008ac9d7b9b5be6dc767c05f9d3e5df51744ce4cc9605de7b9f4/charset_normalizer-3.4.7-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl
+      - pypi: https://files.pythonhosted.org/packages/ae/44/c1221527f6a71a01ec6fbad7fa78f1d50dfa02217385cf0fa3eec7087d59/click-8.3.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b1/92/dfd892312d822f36c55366118b95d914e5f16de11044a27cf10a7d71bbbf/commonmark-0.9.1-py2.py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/2d/82/e5d2c1c67d19841e9edc74954c827444ae826978499bde3dfc1d007c8c11/deepmerge-2.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/89/84/06281c82d4d1686fde1ac6b0f307c50918f1c0151062445ab3b6fa5a921d/h5py-3.16.0-cp312-cp312-manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/5d/13/ad7d7ca3808a898b4612b6fe93cde56b53f3034dcde235acb1f0e1df24c6/idna-3.13-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/de/1f/77fa3081e4f66ca3576c896ae5d31c3002ac6607f9747d2e3aa49227e464/markdown-3.10.2-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/f7/27/a2fc51a4a122dfd1015e921ae9d22fee3d20b0b8080d9a704578bf9deece/pymdown_extensions-10.21.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/07/bc/587a445451b253b285629263eb51c2d8e9bcea4fc97826266d186f96f558/pyserial-3.5-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/58/34/e4ac153acdbcfba7f48bc73d6586a74c91cc919fcc2e29acbf81be329d1f/python_can-4.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/28/b8/27e6312e86408a44fe16bd28ee12dd98608b39f7e7e57884a24e8f29b573/pyusb-1.3.1-py3-none-any.whl
@@ -682,6 +689,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/28/f7/4b9d17a2b53a46a95781106ffe29a7414dc8760d542bd430196d201d1a91/textual-0.1.18-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/39/08/aaaad47bc4e9dc8c725e68f9d04865dbcb2052843ff09c97b08904852d84/urllib3-2.6.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ca/38/2e1785df03b3d72d34fc6252d91d9d12dc27a5c89caef3335a1bbb8908ca/wrapt-1.17.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl
+      - pypi: https://files.pythonhosted.org/packages/4f/9a/6a83ad209081a953e0285d5056e5452c4fbcabd2f104f3797d53e4bdd96f/zensical-0.0.31-cp310-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
       - pypi: ../pyAgxArm
 packages:
 - conda: https://prefix.dev/conda-forge/linux-aarch64/_openmp_mutex-4.5-20_gnu.conda
@@ -1019,6 +1027,13 @@ packages:
   version: 3.4.7
   sha256: 6178f72c5508bfc5fd446a5905e698c6212932f25bcdd4b47a757a50605a90e2
   requires_python: '>=3.7'
+- pypi: https://files.pythonhosted.org/packages/ae/44/c1221527f6a71a01ec6fbad7fa78f1d50dfa02217385cf0fa3eec7087d59/click-8.3.3-py3-none-any.whl
+  name: click
+  version: 8.3.3
+  sha256: a2bf429bb3033c89fa4936ffb35d5cb471e3719e1f3c8a7c3fff0b8314305613
+  requires_dist:
+  - colorama ; sys_platform == 'win32'
+  requires_python: '>=3.10'
 - conda: https://prefix.dev/conda-forge/linux-aarch64/cmake-3.31.8-hc9d863e_0.conda
   sha256: 91cbfd13132b7253a6ef001292f5cf59deac38d2cbc86d6c1ad6ebf344cd998c
   md5: 855e698fd08794a573cd6104be8da4d0
@@ -1498,6 +1513,20 @@ packages:
   purls: []
   size: 480416
   timestamp: 1764536098891
+- pypi: https://files.pythonhosted.org/packages/2d/82/e5d2c1c67d19841e9edc74954c827444ae826978499bde3dfc1d007c8c11/deepmerge-2.0-py3-none-any.whl
+  name: deepmerge
+  version: '2.0'
+  sha256: 6de9ce507115cff0bed95ff0ce9ecc31088ef50cbdf09bc90a09349a318b3d00
+  requires_dist:
+  - typing-extensions ; python_full_version < '3.10'
+  - validate-pyproject[all] ; extra == 'dev'
+  - pyupgrade ; extra == 'dev'
+  - black ; extra == 'dev'
+  - mypy ; extra == 'dev'
+  - pytest ; extra == 'dev'
+  - build ; extra == 'dev'
+  - twine ; extra == 'dev'
+  requires_python: '>=3.8'
 - conda: https://prefix.dev/conda-forge/noarch/distlib-0.4.0-pyhd8ed1ab_0.conda
   sha256: 6d977f0b2fc24fee21a9554389ab83070db341af6d6f09285360b2e09ef8b26e
   md5: 003b8ba0a94e2f1e117d0bd46aebc901
@@ -4099,6 +4128,21 @@ packages:
   purls: []
   size: 528318
   timestamp: 1727801707353
+- pypi: https://files.pythonhosted.org/packages/de/1f/77fa3081e4f66ca3576c896ae5d31c3002ac6607f9747d2e3aa49227e464/markdown-3.10.2-py3-none-any.whl
+  name: markdown
+  version: 3.10.2
+  sha256: e91464b71ae3ee7afd3017d9f358ef0baf158fd9a298db92f1d4761133824c36
+  requires_dist:
+  - coverage ; extra == 'testing'
+  - pyyaml ; extra == 'testing'
+  - mkdocs>=1.6 ; extra == 'docs'
+  - mkdocs-nature>=0.6 ; extra == 'docs'
+  - mdx-gh-links>=0.2 ; extra == 'docs'
+  - mkdocstrings[python]>=0.28.3 ; extra == 'docs'
+  - mkdocs-gen-files ; extra == 'docs'
+  - mkdocs-section-index ; extra == 'docs'
+  - mkdocs-literate-nav ; extra == 'docs'
+  requires_python: '>=3.10'
 - conda: https://prefix.dev/conda-forge/linux-aarch64/markupsafe-3.0.3-py312hd077ced_1.conda
   sha256: 5919bf53e9f74ee1c6ce35ce13a7cd92741d45385c2d0b3eae48b01c0f11f41a
   md5: 1fecdd103b37427ba6041b9b03d657ea
@@ -4644,6 +4688,15 @@ packages:
   - pkg:pypi/pygments?source=hash-mapping
   size: 889287
   timestamp: 1750615908735
+- pypi: https://files.pythonhosted.org/packages/f7/27/a2fc51a4a122dfd1015e921ae9d22fee3d20b0b8080d9a704578bf9deece/pymdown_extensions-10.21.2-py3-none-any.whl
+  name: pymdown-extensions
+  version: 10.21.2
+  sha256: 5c0fd2a2bea14eb39af8ff284f1066d898ab2187d81b889b75d46d4348c01638
+  requires_dist:
+  - markdown>=3.6
+  - pyyaml
+  - pygments>=2.19.1 ; extra == 'extra'
+  requires_python: '>=3.9'
 - conda: https://prefix.dev/conda-forge/noarch/pyparsing-3.3.2-pyhcf101f3_0.conda
   sha256: 417fba4783e528ee732afa82999300859b065dc59927344b4859c64aae7182de
   md5: 3687cc0b82a8b4c17e1f0eb7e47163d5
@@ -5034,6 +5087,18 @@ packages:
   purls: []
   size: 59431720
   timestamp: 1769683812439
+- conda: https://prefix.dev/conda-forge/linux-aarch64/rapidjson-1.1.0.post20240409-h5ad3122_2.conda
+  sha256: 23bea89944146065881d95b3532a02634ccb3e22cd6bdb0f1dab784bf2c6e23f
+  md5: 1bc039af0f3316386d1e6df28e1e44f3
+  depends:
+  - libgcc >=13
+  - libstdcxx >=13
+  - libgcc >=13
+  license: MIT
+  license_family: MIT
+  purls: []
+  size: 157209
+  timestamp: 1742820749175
 - conda: https://prefix.dev/conda-forge/linux-aarch64/rav1e-0.8.1-h9d4cc37_0.conda
   sha256: b54b0e66d264ce5904862012f08eda155ecfc6520f66a321f9363682fef94c59
   md5: a3c060f1a410865150bb1d59cddf6d7c
@@ -6334,6 +6399,29 @@ packages:
   license: Apache-2.0 OR Zlib
   size: 19825
   timestamp: 1773554864050
+- conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-foxglove-bridge-3.2.4-np2py312h61f2ce4_15.conda
+  sha256: 82f9ad19c02daf5b1250a2a9155aea15871df85675f6e128de296c0fd46a6485
+  md5: 270d8d6916f9edd3105afcc4d430f3dc
+  depends:
+  - python
+  - ros-humble-ament-index-cpp
+  - ros-humble-rclcpp
+  - ros-humble-rclcpp-components
+  - ros-humble-resource-retriever
+  - ros-humble-ros-workspace
+  - ros-humble-rosgraph-msgs
+  - ros-humble-rosx-introspection
+  - ros-humble-std-msgs
+  - ros2-distro-mutex 0.8.* humble_*
+  - libgcc >=14
+  - libstdcxx >=14
+  - openssl >=3.6.1,<4.0a0
+  - python_abi 3.12.* *_cp312
+  - numpy >=1.23,<3
+  - ros2-distro-mutex >=0.8.0,<0.9.0a0
+  license: MIT
+  size: 6830296
+  timestamp: 1773688472646
 - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-generate-parameter-library-0.6.0-np2py312h8b5252a_15.conda
   sha256: 3c4ec9cf17b83c753c679b928a8837073de0b2a12a6fafdc4f85881ec3956e1b
   md5: 009609b5578b8662e2ee8687cef04e09
@@ -9492,6 +9580,25 @@ packages:
   license: Apache-2.0
   size: 47379
   timestamp: 1773555781724
+- conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-rosx-introspection-1.0.2-np2py312h61f2ce4_15.conda
+  sha256: 5942fe59266d7fb758daf4ea335ca281db28f68336e0af6d5b42179237642864
+  md5: ecfe64e652af847bb891b8012bc6705d
+  depends:
+  - python
+  - rapidjson
+  - ros-humble-ament-index-cpp
+  - ros-humble-rclcpp
+  - ros-humble-ros-workspace
+  - ros-humble-rosbag2-cpp
+  - ros2-distro-mutex 0.8.* humble_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - numpy >=1.23,<3
+  - ros2-distro-mutex >=0.8.0,<0.9.0a0
+  - python_abi 3.12.* *_cp312
+  license: MIT
+  size: 219687
+  timestamp: 1773688221850
 - conda: https://prefix.dev/robostack-humble/linux-aarch64/ros-humble-rpyutils-0.2.2-np2py312h61f2ce4_15.conda
   sha256: c857666a64b0bb5ae187f6416e53224647398ef9d22fd2f1b821156f4331d107
   md5: 9721fcf0359e597bb5b80076b570e250
@@ -11420,6 +11527,19 @@ packages:
   purls: []
   size: 213281
   timestamp: 1745308220432
+- pypi: https://files.pythonhosted.org/packages/4f/9a/6a83ad209081a953e0285d5056e5452c4fbcabd2f104f3797d53e4bdd96f/zensical-0.0.31-cp310-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
+  name: zensical
+  version: 0.0.31
+  sha256: fb2b50ecf674997f818e53f12f2a67875a21b0c79ed74c151dfaef2f1475e5bf
+  requires_dist:
+  - click>=8.1.8
+  - deepmerge>=2.0
+  - markdown>=3.7
+  - pygments>=2.16
+  - pymdown-extensions>=10.15
+  - pyyaml>=6.0.2
+  - tomli>=2.0 ; python_full_version < '3.11'
+  requires_python: '>=3.10'
 - conda: https://prefix.dev/conda-forge/noarch/zipp-3.23.0-pyhcf101f3_1.conda
   sha256: b4533f7d9efc976511a73ef7d4a2473406d7f4c750884be8e8620b0ce70f4dae
   md5: 30cd29cb87d819caead4d55184c1d115

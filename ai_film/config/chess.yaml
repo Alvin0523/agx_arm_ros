@@ -1,0 +1,253 @@
+# ─── Chess Board Poses & Sequences ───────────────────────────────────────────
+# Named TCP poses, hover offsets, and pick-place sequences for the chess demo.
+# This is the file to edit when:
+#   - Moving or re-measuring board slot positions
+#   - Adding/changing sequences
+#   - Adjusting hover heights
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# ─── Named TCP poses ─────────────────────────────────────────────────────────
+# All orientations use qy=1 (TCP pointing straight down — standard pick pose).
+
+poses:
+  top_left:
+    x:  0.331
+    y:  0.010
+    z:  0.150
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  top_right:
+    x:  0.331
+    y: -0.040
+    z:  0.150
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  bottom_left:
+    x:  0.281
+    y:  0.010
+    z:  0.150
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  bottom_right:
+    x:  0.281
+    y: -0.040
+    z:  0.150
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  # ── 3×3 slot plate  (center = 0.311, 0.025, 0.149 ; step = 0.065 m) ──
+  #
+  #   slot_r1c1  slot_r1c2  slot_r1c3      ← row 1  (far, +x)
+  #   slot_r2c1  slot_r2c2  slot_r2c3      ← row 2  (middle)
+  #   slot_r3c1  slot_r3c2  slot_r3c3      ← row 3  (near, -x)
+  #     col1       col2       col3
+  #     left(+y)   centre    right(-y)
+
+  slot_r1c1:
+    x:  0.376
+    y:  0.090
+    z:  0.149
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  slot_r1c2:
+    x:  0.376
+    y:  0.025
+    z:  0.149
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  slot_r1c3:
+    x:  0.376
+    y: -0.040
+    z:  0.149
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  slot_r2c1:
+    x:  0.311
+    y:  0.090
+    z:  0.149
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  slot_r2c2:
+    x:  0.311
+    y:  0.025
+    z:  0.149
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  slot_r2c3:
+    x:  0.311
+    y: -0.040
+    z:  0.149
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  slot_r3c1:
+    x:  0.246
+    y:  0.090
+    z:  0.149
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  slot_r3c2:
+    x:  0.246
+    y:  0.025
+    z:  0.149
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  slot_r3c3:
+    x:  0.246
+    y: -0.040
+    z:  0.149
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+
+# ─── Hover offsets ───────────────────────────────────────────────────────────
+# Hover point = pose + offset  →  arm goes here before descending to the pose.
+# Only set the axes you need — omitted axes default to 0.0.
+
+offsets:
+  offset1:          # straight vertical hover (most common)
+    z_offset: 0.08
+
+  offset2:          # taller vertical hover
+    z_offset: 0.15
+
+  offset3:          # slide in along X + slight lift
+    x_offset: 0.10
+    z_offset: 0.05
+
+
+# ─── Sequences ───────────────────────────────────────────────────────────────
+
+sequences:
+
+  2x2_loop:
+    loop: true
+    steps:
+      - type: pick_place
+        pick:         top_left
+        place:        top_right
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         bottom_right
+        place:        bottom_left
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         top_right
+        place:        bottom_right
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         bottom_left
+        place:        top_left
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: home
+
+  chess_loop:
+    loop: true
+    steps:
+      # Slot layout:
+      #   1=slot_r1c1  2=slot_r1c2  3=slot_r1c3
+      #   4=slot_r2c1  5=slot_r2c2  6=slot_r2c3
+      #   7=slot_r3c1  8=slot_r3c2  9=slot_r3c3
+
+      # Step 1: white  1 → 7
+      - type: pick_place
+        pick:         slot_r1c1
+        place:        slot_r3c1
+        pick_offset:  offset1
+        place_offset: offset1
+
+      # Step 2: black  2 → 8
+      - type: pick_place
+        pick:         slot_r1c2
+        place:        slot_r3c2
+        pick_offset:  offset1
+        place_offset: offset1
+
+      # Step 3: white  7 → 9
+      - type: pick_place
+        pick:         slot_r3c1
+        place:        slot_r3c3
+        pick_offset:  offset1
+        place_offset: offset1
+
+      # Step 4: black  4 → 6
+      - type: pick_place
+        pick:         slot_r2c1
+        place:        slot_r2c3
+        pick_offset:  offset1
+        place_offset: offset1
+
+      # Step 5: white  9 → 3
+      - type: pick_place
+        pick:         slot_r3c3
+        place:        slot_r1c3
+        pick_offset:  offset1
+        place_offset: offset1
+
+      # Step 6: black  8 → 2
+      - type: pick_place
+        pick:         slot_r3c2
+        place:        slot_r1c2
+        pick_offset:  offset1
+        place_offset: offset1
+
+      # Step 7: white  3 → 1
+      - type: pick_place
+        pick:         slot_r1c3
+        place:        slot_r1c1
+        pick_offset:  offset1
+        place_offset: offset1
+
+      # Step 8: black  6 → 4  (restores start state)
+      - type: pick_place
+        pick:         slot_r2c3
+        place:        slot_r2c1
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: home

@@ -1,0 +1,3309 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Moveit gudie using piper_arm">
+      
+      
+        <meta name="author" content="Wong Wei Ming">
+      
+      
+      
+        <link rel="prev" href="../README_CN/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.31">
+    
+    
+      
+        <title>AgileX Robotic Arm ROS2 Driver - Piper Arm Moveit2</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.53a7feaf.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#agilex-robotic-arm-ros2-driver" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="./.." title="Piper Arm Moveit2" class="md-header__button md-logo" aria-label="Piper Arm Moveit2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Piper Arm Moveit2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AgileX Robotic Arm ROS2 Driver
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="./.." title="Piper Arm Moveit2" class="md-nav__button md-logo" aria-label="Piper Arm Moveit2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    Piper Arm Moveit2
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-rocket" viewBox="0 0 24 24"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../teaching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Positions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensor Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CAN_USER_EN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CAN Setup (EN)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CAN_USER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CAN Setup (中文)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Q&A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tcp_offset/TCP_OFFSET/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TCP Offset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../README_CN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    README (中文)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    README (EN)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    README (EN)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-install-python-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Install Python SDK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-ros2-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Install ROS2 Driver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Install Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-build-and-source-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Build and Source Workspace
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activate-can-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Activate CAN Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launch-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch Driver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launch-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urdf-model-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URDF Model Visualization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="URDF Model Visualization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#standalone-model-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standalone Model View
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-usage-combinations-follow-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical Usage Combinations (follow / control)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Control Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#piper-arm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Piper Arm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nero-arm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nero Arm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gripper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gripper
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dexterous-hand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dexterous Hand
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Calls
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-subscription" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status Subscription
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros2-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROS2 Interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ROS2 Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feedback-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feedback Topics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Feedback Topics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#joint-states-details-feedbackjoint_states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joint States Details (/feedback/joint_states)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arm-status-details-feedbackarm_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arm Status Details (/feedback/arm_status)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gripper-status-details-feedbackgripper_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gripper Status Details (/feedback/gripper_status)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hand-status-details-feedbackhand_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hand Status Details (/feedback/hand_status)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control Topics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Control Topics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controljoint_states-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/joint_states Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlmove_mit-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/move_mit Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlhand-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/hand Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlhand_position_time-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/hand_position_time Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameter Limits
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameter Limits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gripper_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gripper
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dexterous-hand-revo2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dexterous Hand (Revo2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Important Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#can-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CAN Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safety-warnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Safety Warnings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-install-python-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Install Python SDK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-ros2-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Install ROS2 Driver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Install Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-build-and-source-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Build and Source Workspace
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activate-can-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Activate CAN Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launch-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch Driver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launch-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urdf-model-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URDF Model Visualization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="URDF Model Visualization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#standalone-model-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standalone Model View
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-usage-combinations-follow-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical Usage Combinations (follow / control)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Control Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#piper-arm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Piper Arm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nero-arm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nero Arm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gripper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gripper
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dexterous-hand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dexterous Hand
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Calls
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-subscription" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status Subscription
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros2-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROS2 Interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ROS2 Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feedback-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feedback Topics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Feedback Topics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#joint-states-details-feedbackjoint_states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joint States Details (/feedback/joint_states)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arm-status-details-feedbackarm_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arm Status Details (/feedback/arm_status)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gripper-status-details-feedbackgripper_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gripper Status Details (/feedback/gripper_status)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hand-status-details-feedbackhand_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hand Status Details (/feedback/hand_status)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control Topics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Control Topics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controljoint_states-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/joint_states Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlmove_mit-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/move_mit Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlhand-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/hand Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlhand_position_time-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/hand_position_time Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameter Limits
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameter Limits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gripper_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gripper
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dexterous-hand-revo2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dexterous Hand (Revo2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Important Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#can-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CAN Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safety-warnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Safety Warnings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<h1 id="agilex-robotic-arm-ros2-driver">AgileX Robotic Arm ROS2 Driver<a class="headerlink" href="#agilex-robotic-arm-ros2-driver" title="Permanent link">&para;</a></h1>
+<p><a href=".././">中文</a></p>
+<table>
+<thead>
+<tr>
+<th>ROS</th>
+<th>STATE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="humble" src="https://img.shields.io/badge/ros-humble-blue.svg" /></td>
+<td><img alt="Pass" src="https://img.shields.io/badge/Pass-blue.svg" /></td>
+</tr>
+<tr>
+<td><img alt="jazzy" src="https://img.shields.io/badge/ros-jazzy-blue.svg" /></td>
+<td><img alt="Pass" src="https://img.shields.io/badge/Pass-blue.svg" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>This driver package provides full ROS2 interface support for AgileX series robotic arms (Piper, Nero, etc.).</p>
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th>Documentation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SDK</td>
+<td><a href="https://github.com/agilexrobotics/pyAgxArm">pyAgxArm</a></td>
+</tr>
+<tr>
+<td>CAN module usage</td>
+<td><a href=".././docs/CAN_USER_EN/">can_user</a></td>
+</tr>
+<tr>
+<td>TCP Offset Configuration</td>
+<td><a href=".././docs/tcp_offset/TCP_OFFSET_EN/">tcp_offset</a></td>
+</tr>
+<tr>
+<td>URDF</td>
+<td><a href="https://github.com/agilexrobotics/agx_arm_urdf">URDF</a></td>
+</tr>
+<tr>
+<td>Moveit</td>
+<td><a href=".././src/agx_arm_moveit/README_EN/">Moveit</a></td>
+</tr>
+<tr>
+<td>Q&amp;A</td>
+<td><a href=".././docs/Q&amp;A/">Q&amp;A</a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<h3 id="1-install-python-sdk">1. Install Python SDK<a class="headerlink" href="#1-install-python-sdk" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/agilexrobotics/pyAgxArm.git
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>pyAgxArm
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pixi<span class="w"> </span>install<span class="w"> </span><span class="k">in</span><span class="w"> </span>piper_ws
+</span></code></pre></div>
+<h3 id="2-install-ros2-driver">2. Install ROS2 Driver<a class="headerlink" href="#2-install-ros2-driver" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Create workspace</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/agx_arm_ws/src
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>~/agx_arm_ws/src
+</span></code></pre></div>
+</li>
+<li>
+<p>Clone repository</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>ros2<span class="w"> </span>--recurse-submodules<span class="w"> </span>https://github.com/Alvin0523/agx_arm_ros.git
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>agx_arm_ros/
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--remote<span class="w"> </span>--recursive
+</span></code></pre></div>
+</li>
+</ol>
+<h3 id="3-install-dependencies">3. Install Dependencies<a class="headerlink" href="#3-install-dependencies" title="Permanent link">&para;</a></h3>
+<p>Run the script to install all dependencies at once:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pixi<span class="w"> </span>install
+</span></code></pre></div>
+<ol>
+<li>
+<p>CAN tools</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>can-utils<span class="w"> </span>ethtool
+</span></code></pre></div>
+</li>
+</ol>
+<h3 id="4-build-and-source-workspace">4. Build and Source Workspace<a class="headerlink" href="#4-build-and-source-workspace" title="Permanent link">&para;</a></h3>
+<p>Check if you are in a virtual environment. If so, it is recommended to exit the virtual environment first.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>which<span class="w"> </span>pip3
+</span></code></pre></div>
+<p>Build and Source the workspace:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>~/agx_arm_ws
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pixi<span class="w"> </span>shell
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nb">source</span><span class="w"> </span>install/setup.bash
+</span></code></pre></div>
+<hr />
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<h3 id="activate-can-module">Activate CAN Module<a class="headerlink" href="#activate-can-module" title="Permanent link">&para;</a></h3>
+<p>CAN module must be activated before use. For details, see: <a href=".././docs/CAN_USER_EN/">CAN Configuration Guide</a></p>
+<p>When only a single CAN module is connected to the computer, you can <strong>quickly complete activation</strong> through the following steps:</p>
+<p>Open a terminal window and execute the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">cd</span><span class="w"> </span>~/agx_arm_ws/src/agx_arm_ros/scripts<span class="w"> </span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>bash<span class="w"> </span>can_activate.sh
+</span></code></pre></div>
+<h3 id="launch-driver">Launch Driver<a class="headerlink" href="#launch-driver" title="Permanent link">&para;</a></h3>
+<p>You can start the driver using a launch file or by running the node directly.</p>
+<blockquote>
+<p><strong>Important: Read before launching</strong>
+The parameters in the following launch commands <strong>must</strong> be replaced according to your actual hardware configuration:
+- <strong><code>can_port</code></strong>: The CAN port connected to the arm, e.g. <code>can0</code>.
+- <strong><code>arm_type</code></strong>: The arm model, e.g. <code>piper</code>.
+- <strong><code>effector_type</code></strong>: The end-effector type, e.g. <code>none</code> or <code>agx_gripper</code>.
+- <strong><code>tcp_offset</code></strong>: Tool Center Point (TCP) offset relative to the flange center, e.g. [0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+  - Note: All values of this parameter must be floating-point numbers; for TCP offset configuration examples, see <a href=".././docs/tcp_offset/TCP_OFFSET_EN/">TCP Offset Guide</a>.</p>
+<p>For full parameter descriptions, default values and options, see <strong><a href="#launch-parameters">Launch Parameters</a></strong> below.</p>
+</blockquote>
+<p><strong>Using launch file:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>effector_type:<span class="o">=</span>none<span class="w"> </span>tcp_offset:<span class="o">=</span><span class="s1">&#39;[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]&#39;</span>
+</span></code></pre></div>
+<p><strong>Running node directly:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>agx_arm_ctrl_single<span class="w"> </span>--ros-args<span class="w"> </span>-p<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>-p<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>-p<span class="w"> </span>effector_type:<span class="o">=</span>none<span class="w"> </span>-p<span class="w"> </span>tcp_offset:<span class="o">=</span><span class="s1">&#39;[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]&#39;</span>
+</span></code></pre></div>
+<p><strong>Visualization Debug Launch:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm_rviz.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>effector_type:<span class="o">=</span>none<span class="w"> </span>tcp_offset:<span class="o">=</span><span class="s1">&#39;[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]&#39;</span>
+</span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong>
+- <code>start_single_agx_arm_rviz.launch.py</code> subscribes to the <code>/feedback/joint_states</code> topic. The parameter <code>control</code> controls whether RViz-side joint_state_publisher publishes <code>/control/joint_states</code> (by default <code>control:=false</code>, so no control topics are published from RViz).
+- If you only want to visualize and follow the real arm state, it is recommended to keep <code>control:=false</code>.
+- If you want to use RViz joint sliders to publish <code>/control/joint_states</code>, explicitly set <code>control:=true</code>. In this case, it may conflict with the control commands in <a href="#control-examples">Control Examples</a>.</p>
+</blockquote>
+<p><strong>MoveIt One-Click Launch (Arm Control + MoveIt + RViz):</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm_moveit.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>effector_type:<span class="o">=</span>agx_gripper
+</span></code></pre></div>
+<blockquote>
+<p>This launch file starts both the arm control node and MoveIt2 simultaneously, automatically connecting joint feedback (<code>/feedback/joint_states</code>) to MoveIt. No need to start two terminals separately. Supports all <code>agx_arm_ctrl</code> parameters (e.g. <code>tcp_offset</code>, <code>speed_percent</code>, etc.). See <a href=".././src/agx_arm_moveit/README_EN/">Moveit</a> for details.</p>
+</blockquote>
+<h3 id="launch-parameters">Launch Parameters<a class="headerlink" href="#launch-parameters" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>can_port</code></td>
+<td><code>can0</code></td>
+<td>CAN port</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>arm_type</code></td>
+<td><code>piper</code></td>
+<td>Arm model</td>
+<td><code>nero</code>, <code>piper</code>, <code>piper_h</code>, <code>piper_l</code>, <code>piper_x</code></td>
+</tr>
+<tr>
+<td><code>effector_type</code></td>
+<td><code>none</code></td>
+<td>End-effector type</td>
+<td><code>none</code>, <code>agx_gripper</code>, <code>revo2</code></td>
+</tr>
+<tr>
+<td><code>revo2_type</code></td>
+<td><code>left</code></td>
+<td>Revo2 dexterous hand type</td>
+<td><code>left</code>, <code>right</code></td>
+</tr>
+<tr>
+<td><code>auto_enable</code></td>
+<td><code>true</code></td>
+<td>Auto enable on startup</td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>installation_pos</code></td>
+<td><code>horizontal</code></td>
+<td>Mount orientation (Piper series only)</td>
+<td><code>horizontal</code>, <code>left</code>, <code>right</code></td>
+</tr>
+<tr>
+<td><code>payload</code></td>
+<td><code>empty</code></td>
+<td>Payload configuration (currently only effective for Piper series)</td>
+<td><code>full</code>, <code>half</code>, <code>empty</code></td>
+</tr>
+<tr>
+<td><code>speed_percent</code></td>
+<td><code>100</code></td>
+<td>Motion speed (%)</td>
+<td><code>0-100</code></td>
+</tr>
+<tr>
+<td><code>pub_rate</code></td>
+<td><code>200</code></td>
+<td>Status publish rate (Hz)</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>enable_timeout</code></td>
+<td><code>5.0</code></td>
+<td>Enable timeout (seconds)</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>tcp_offset</code></td>
+<td><code>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]</code></td>
+<td>Tool Center Point (TCP) offset relative to the flange center [x, y, z, rx, ry, rz]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>publish_gripper_joint</code></td>
+<td><code>true</code></td>
+<td>Whether to publish the <code>gripper</code> joint (gripper opening width) in <code>/feedback/joint_states</code>. Set to <code>false</code> when used with MoveIt, as the URDF only defines <code>gripper_joint1</code>/<code>gripper_joint2</code></td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>log_level</code></td>
+<td><code>info</code></td>
+<td>Log level</td>
+<td><code>debug</code>, <code>info</code>, <code>warn</code>, <code>error</code>, <code>fatal</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="urdf-model-visualization">URDF Model Visualization<a class="headerlink" href="#urdf-model-visualization" title="Permanent link">&para;</a></h3>
+<h4 id="standalone-model-view">Standalone Model View<a class="headerlink" href="#standalone-model-view" title="Permanent link">&para;</a></h4>
+<p>Load the URDF model in RViz and adjust joints manually using the GUI sliders. No need to start the arm driver node:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_description<span class="w"> </span>display.launch.py<span class="w"> </span>arm_type:<span class="o">=</span>piper
+</span></code></pre></div>
+<p><strong>The following three methods are supported to specify the model:</strong></p>
+<ol>
+<li>
+<p><strong>Preset model name (via <code>arm_type</code>)</strong> (recommended): Use a built-in model name to automatically match the corresponding URDF file</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_description<span class="w"> </span>display.launch.py<span class="w"> </span>arm_type:<span class="o">=</span>piper
+</span></code></pre></div>
+</li>
+<li>
+<p><strong>Relative path (via <code>custom_model</code>)</strong>: Path relative to the <code>agx_arm_urdf/</code> directory, suitable for custom models</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_description<span class="w"> </span>display.launch.py<span class="w"> </span>custom_model:<span class="o">=</span>piper/urdf/piper_description.urdf
+</span></code></pre></div>
+</li>
+<li>
+<p><strong>Absolute path (via <code>custom_model</code>)</strong>: Directly specify the absolute path to a URDF file, suitable for model files at any location</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_description<span class="w"> </span>display.launch.py<span class="w"> </span>custom_model:<span class="o">=</span>/home/user/my_robot/custom_arm.urdf
+</span></code></pre></div>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>arm_type</code></td>
+<td><code>piper</code></td>
+<td>Arm model. Presets: <code>nero</code>, <code>piper</code>, <code>piper_h</code>, <code>piper_l</code>, <code>piper_x</code></td>
+</tr>
+<tr>
+<td><code>custom_model</code></td>
+<td>empty string</td>
+<td>Optional custom model path. If relative, it is resolved under <code>agx_arm_urdf/</code>; if absolute, it can point to any URDF/xacro file. When set, <code>arm_type</code> and <code>effector_type</code> are ignored</td>
+</tr>
+<tr>
+<td><code>effector_type</code></td>
+<td><code>none</code></td>
+<td>End-effector type. Presets: <code>none</code>, <code>agx_gripper</code>, <code>revo2</code></td>
+</tr>
+<tr>
+<td><code>revo2_type</code></td>
+<td><code>left</code></td>
+<td>Revo2 dexterous hand type. Presets: <code>left</code>, <code>right</code></td>
+</tr>
+<tr>
+<td><code>pub_rate</code></td>
+<td><code>200</code></td>
+<td>Status publish rate (Hz)</td>
+</tr>
+<tr>
+<td><code>gui</code></td>
+<td><code>true</code></td>
+<td>Whether to enable the <code>joint_state_publisher_gui</code> slider control interface</td>
+</tr>
+<tr>
+<td><code>rvizconfig</code></td>
+<td>Built-in config</td>
+<td>Absolute path to a custom RViz configuration file</td>
+</tr>
+<tr>
+<td><code>follow</code></td>
+<td><code>false</code></td>
+<td>Whether to follow the real arm state (subscribe to <code>/feedback/joint_states</code>, and remap <code>/joint_states</code> to <code>feedback/joint_states</code> in <code>robot_state_publisher</code>)</td>
+</tr>
+<tr>
+<td><code>tcp_offset</code></td>
+<td><code>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]</code></td>
+<td>TCP offset [x, y, z, rx, ry, rz] in meters/radians. When non-zero, a <code>tcp_link</code> TF frame is published automatically</td>
+</tr>
+<tr>
+<td><code>control</code></td>
+<td><code>true</code></td>
+<td>Whether to publish control topics via <code>joint_state_publisher</code> (or GUI version). When <code>true</code>, publishes to <code>/control/joint_states</code>; when <code>false</code>, only follows/displays without publishing control topics. A common real-arm combination is <code>follow:=true, control:=false</code> (follow real arm without sending control from RViz).</td>
+</tr>
+</tbody>
+</table>
+<h4 id="typical-usage-combinations-follow-control">Typical Usage Combinations (follow / control)<a class="headerlink" href="#typical-usage-combinations-follow-control" title="Permanent link">&para;</a></h4>
+<p>Below are <strong>common usage scenarios</strong> with recommended <code>follow</code> and <code>control</code> combinations and example commands:</p>
+<ul>
+<li><strong>Scenario 1: Pure model debugging (no real arm, view URDF and move via sliders only)</strong>  </li>
+<li>Real arm required: No  </li>
+<li>Recommended configuration: <code>follow:=false, control:=true</code>  </li>
+<li>
+<p>Example:<br />
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_description<span class="w"> </span>display.launch.py<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>follow:<span class="o">=</span><span class="nb">false</span><span class="w"> </span>control:<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Scenario 2: Real arm + control only, no follow</strong> (use RViz to send control, but RViz does not follow real feedback)  </p>
+</li>
+<li>Real arm required: Yes  </li>
+<li>Recommended configuration: <code>follow:=false, control:=true</code>  </li>
+<li>
+<p>Example:<br />
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm_rviz.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>follow:<span class="o">=</span><span class="nb">false</span><span class="w"> </span>control:<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Scenario 3: Real arm + follow only, no control</strong> (common: monitor state only, avoid RViz interfering with control)  </p>
+</li>
+<li>Real arm required: Yes  </li>
+<li>Recommended configuration: <code>follow:=true, control:=false</code>  </li>
+<li>
+<p>Example:<br />
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm_rviz.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>follow:<span class="o">=</span><span class="nb">true</span><span class="w"> </span>control:<span class="o">=</span><span class="nb">false</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>Scenario 4: Real arm + control + follow</strong> (use RViz to send control and follow real feedback)  </p>
+</li>
+<li>Real arm required: Yes  </li>
+<li>Recommended configuration: <code>follow:=true, control:=false</code></li>
+<li>Example:<br />
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm_rviz.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>follow:<span class="o">=</span><span class="nb">true</span><span class="w"> </span>control:<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div></li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> In general, it is recommended to keep the <strong>control channel unique</strong>, i.e. only one component should be responsible for publishing <code>/control/*</code> topics (choose one among the <code>agx_arm_ctrl</code> node, MoveIt, or RViz <code>joint_state_publisher</code>) to avoid conflicts from multiple control sources.</p>
+</blockquote>
+<hr />
+<h2 id="control-examples">Control Examples<a class="headerlink" href="#control-examples" title="Permanent link">&para;</a></h2>
+<p>Open an additional terminal and run the following commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nb">cd</span><span class="w"> </span>~/agx_arm_ws
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="nb">source</span><span class="w"> </span>install/setup.bash
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="nb">cd</span><span class="w"> </span>src/agx_arm_ros
+</span></code></pre></div>
+<h3 id="piper-arm">Piper Arm<a class="headerlink" href="#piper-arm" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Joint motion</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_j<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_move_j.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Point-to-point motion</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_p<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_move_p.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Linear motion</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_l<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_move_l.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Circular motion (start → middle → end)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_c<span class="w"> </span>geometry_msgs/msg/PoseArray<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_move_c.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+</ol>
+<h3 id="nero-arm">Nero Arm<a class="headerlink" href="#nero-arm" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Joint motion</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_j<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/nero/test_move_j.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Point-to-point motion</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_p<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/nero/test_move_p.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Linear motion</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_l<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/nero/test_move_l.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Circular motion (start → middle → end)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_c<span class="w"> </span>geometry_msgs/msg/PoseArray<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/nero/test_move_c.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+</ol>
+<h3 id="gripper">Gripper<a class="headerlink" href="#gripper" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Gripper control (via <code>/control/joint_states</code>)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/gripper/test_gripper_joint_states.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Arm + Gripper combined control (via <code>/control/joint_states</code>)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_arm_gripper_joint_states.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+</ol>
+<h3 id="dexterous-hand">Dexterous Hand<a class="headerlink" href="#dexterous-hand" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Dexterous hand — Position mode (all fingers move to 10)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/hand<span class="w"> </span>agx_arm_msgs/msg/HandCmd<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/hand/test_hand_position.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Dexterous hand — Speed mode (all fingers speed 50)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/hand<span class="w"> </span>agx_arm_msgs/msg/HandCmd<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/hand/test_hand_speed.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Dexterous hand — Current mode (all fingers current 50)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/hand<span class="w"> </span>agx_arm_msgs/msg/HandCmd<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/hand/test_hand_current.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Dexterous hand — Position-time control (all fingers move to 50, time 1 second)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/hand_position_time<span class="w"> </span>agx_arm_msgs/msg/HandPositionTimeCmd<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/hand/test_hand_position_time.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Dexterous hand control (via <code>/control/joint_states</code>)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/hand/test_hand_joint_states.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>Arm + Dexterous hand combined control (via <code>/control/joint_states</code>)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_arm_hand_joint_states.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+</ol>
+<h3 id="service-calls">Service Calls<a class="headerlink" href="#service-calls" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Enable arm</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/enable_agx_arm<span class="w"> </span>std_srvs/srv/SetBool<span class="w"> </span><span class="s2">&quot;{data: true}&quot;</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>Disable arm</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/enable_agx_arm<span class="w"> </span>std_srvs/srv/SetBool<span class="w"> </span><span class="s2">&quot;{data: false}&quot;</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>Move to home position</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/move_home<span class="w"> </span>std_srvs/srv/Empty
+</span></code></pre></div>
+</li>
+<li>
+<p>Exit teach mode (Piper series)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/exit_teach_mode<span class="w"> </span>std_srvs/srv/Empty
+</span></code></pre></div>
+<blockquote>
+<p><strong>⚠️ Important Safety Note:</strong> 
+1. After executing this command, the robotic arm will first perform a homing operation and then restart automatically; there is a risk of falling during this process. It is recommended to gently hold the robotic arm after homing to prevent damage from falling.
+2. For Piper series robotic arms with firmware version 1.8.5 and above, the seamless mode switching feature is supported. There is no need to execute the above service command to exit teach mode, as the system will complete the mode switch automatically, avoiding the aforementioned fall risk.</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="status-subscription">Status Subscription<a class="headerlink" href="#status-subscription" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Joint states</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/joint_states
+</span></code></pre></div>
+</li>
+<li>
+<p>TCP pose</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/tcp_pose
+</span></code></pre></div>
+</li>
+<li>
+<p>Arm status</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/arm_status
+</span></code></pre></div>
+</li>
+<li>
+<p>Leader joint angles(For leader arm mode)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/leader_joint_angles
+</span></code></pre></div>
+</li>
+<li>
+<p>Gripper status</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/gripper_status
+</span></code></pre></div>
+</li>
+<li>
+<p>Dexterous hand status </p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/hand_status
+</span></code></pre></div>
+</li>
+</ol>
+<hr />
+<h2 id="ros2-interface">ROS2 Interface<a class="headerlink" href="#ros2-interface" title="Permanent link">&para;</a></h2>
+<h3 id="feedback-topics">Feedback Topics<a class="headerlink" href="#feedback-topics" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Message Type</th>
+<th>Description</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/feedback/joint_states</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>Joint states</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/feedback/tcp_pose</code></td>
+<td><code>geometry_msgs/PoseStamped</code></td>
+<td>TCP pose</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/feedback/arm_status</code></td>
+<td><code>agx_arm_msgs/AgxArmStatus</code></td>
+<td>Arm status</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/feedback/leader_joint_angles</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>Leader joint angles</td>
+<td>Leader arm mode</td>
+</tr>
+<tr>
+<td><code>/feedback/gripper_status</code></td>
+<td><code>agx_arm_msgs/GripperStatus</code></td>
+<td>Gripper status</td>
+<td>AgxGripper configured</td>
+</tr>
+<tr>
+<td><code>/feedback/hand_status</code></td>
+<td><code>agx_arm_msgs/HandStatus</code></td>
+<td>Dexterous hand status</td>
+<td>Revo2 configured</td>
+</tr>
+</tbody>
+</table>
+<h4 id="joint-states-details-feedbackjoint_states">Joint States Details (<code>/feedback/joint_states</code>)<a class="headerlink" href="#joint-states-details-feedbackjoint_states" title="Permanent link">&para;</a></h4>
+<p>This topic contains combined joint states for the arm and end-effector:</p>
+<p><strong>Arm Joints</strong> (<code>joint1</code> ~ <code>joint*</code>)</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>position</code></td>
+<td>Joint angle (rad)</td>
+</tr>
+<tr>
+<td><code>velocity</code></td>
+<td>Joint velocity (rad/s)</td>
+</tr>
+<tr>
+<td><code>effort</code></td>
+<td>Joint torque (Nm)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Gripper Joints</strong> (requires <code>effector_type=agx_gripper</code>)</p>
+<p>By default, three joints are published: <code>gripper</code>, <code>gripper_joint1</code>, and <code>gripper_joint2</code>. If <code>publish_gripper_joint</code> is set to <code>false</code>, only <code>gripper_joint1</code> and <code>gripper_joint2</code> are published (the URDF joint names, compatible with MoveIt).</p>
+<table>
+<thead>
+<tr>
+<th>Joint Name</th>
+<th><code>position</code></th>
+<th><code>velocity</code></th>
+<th><code>effort</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gripper</code></td>
+<td>Gripper opening width (m), range [0, 0.1]</td>
+<td>0.0</td>
+<td>Force (N)</td>
+</tr>
+<tr>
+<td><code>gripper_joint1</code></td>
+<td>Single jaw displacement = width × 0.5 (m)</td>
+<td>0.0</td>
+<td>Force (N)</td>
+</tr>
+<tr>
+<td><code>gripper_joint2</code></td>
+<td>Single jaw displacement = width × -0.5 (m)</td>
+<td>0.0</td>
+<td>Force (N)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dexterous Hand Joints</strong> (requires <code>effector_type=revo2</code>)</p>
+<p>Left hand joint names:</p>
+<ul>
+<li><code>left_thumb_metacarpal_joint</code></li>
+<li><code>left_thumb_proximal_joint</code></li>
+<li><code>left_index_proximal_joint</code></li>
+<li><code>left_middle_proximal_joint</code></li>
+<li><code>left_ring_proximal_joint</code></li>
+<li><code>left_pinky_proximal_joint</code></li>
+</ul>
+<p>Right hand joint names:</p>
+<ul>
+<li><code>right_thumb_metacarpal_joint</code></li>
+<li><code>right_thumb_proximal_joint</code></li>
+<li><code>right_index_proximal_joint</code></li>
+<li><code>right_middle_proximal_joint</code></li>
+<li><code>right_ring_proximal_joint</code></li>
+<li><code>right_pinky_proximal_joint</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>position</code></td>
+<td>Finger joint angle (rad)</td>
+</tr>
+<tr>
+<td><code>velocity</code></td>
+<td>0.0</td>
+</tr>
+<tr>
+<td><code>effort</code></td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+<h4 id="arm-status-details-feedbackarm_status">Arm Status Details (<code>/feedback/arm_status</code>)<a class="headerlink" href="#arm-status-details-feedbackarm_status" title="Permanent link">&para;</a></h4>
+<p>Message type: <code>agx_arm_msgs/AgxArmStatus</code></p>
+<p><strong>Message Field Description:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctrl_mode</code></td>
+<td><code>uint8</code></td>
+<td>Control mode, see table below</td>
+</tr>
+<tr>
+<td><code>arm_status</code></td>
+<td><code>uint8</code></td>
+<td>Arm status, see table below</td>
+</tr>
+<tr>
+<td><code>mode_feedback</code></td>
+<td><code>uint8</code></td>
+<td>Mode feedback, see table below</td>
+</tr>
+<tr>
+<td><code>teach_status</code></td>
+<td><code>uint8</code></td>
+<td>Teach status, see table below</td>
+</tr>
+<tr>
+<td><code>motion_status</code></td>
+<td><code>uint8</code></td>
+<td>Motion status: 0=reached target, 1=not reached</td>
+</tr>
+<tr>
+<td><code>trajectory_num</code></td>
+<td><code>uint8</code></td>
+<td>Current trajectory point number (0~255, feedback in offline trajectory mode)</td>
+</tr>
+<tr>
+<td><code>err_status</code></td>
+<td><code>int64</code></td>
+<td>Error status code</td>
+</tr>
+<tr>
+<td><code>joint_1_angle_limit</code> ~ <code>joint_7_angle_limit</code></td>
+<td><code>bool</code></td>
+<td>Joint 1~7 angle limit (true=abnormal, false=normal)</td>
+</tr>
+<tr>
+<td><code>communication_status_joint_1</code> ~ <code>communication_status_joint_7</code></td>
+<td><code>bool</code></td>
+<td>Joint 1~7 communication status (true=abnormal, false=normal)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Control Mode (<code>ctrl_mode</code>):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Standby</td>
+</tr>
+<tr>
+<td>1</td>
+<td>CAN command control</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Teach mode</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ethernet control</td>
+</tr>
+<tr>
+<td>4</td>
+<td>WiFi control</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Remote control mode</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Coordinated teach input</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Offline trajectory mode</td>
+</tr>
+<tr>
+<td>8</td>
+<td>TCP control</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arm Status (<code>arm_status</code>):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Normal</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Emergency stop</td>
+</tr>
+<tr>
+<td>2</td>
+<td>No solution</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Singularity</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Target angle out of range</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Joint communication abnormal</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Joint brake not released</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Collision detected</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Teach drag overspeed</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Joint status abnormal</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Other abnormal</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Teaching recording</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Teaching executing</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Teaching paused</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Main controller NTC overtemperature</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Release resistor NTC overtemperature</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mode Feedback (<code>mode_feedback</code>):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>MOVE P</td>
+</tr>
+<tr>
+<td>1</td>
+<td>MOVE J</td>
+</tr>
+<tr>
+<td>2</td>
+<td>MOVE L</td>
+</tr>
+<tr>
+<td>3</td>
+<td>MOVE C</td>
+</tr>
+<tr>
+<td>4</td>
+<td>MOVE MIT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>MOVE CPV</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Teach Status (<code>teach_status</code>):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Closed</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Start teaching record (enter drag teaching)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>End teaching record (exit drag teaching)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Execute teaching trajectory</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Pause execution</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Continue execution</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Terminate execution</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Move to trajectory start point</td>
+</tr>
+</tbody>
+</table>
+<h4 id="gripper-status-details-feedbackgripper_status">Gripper Status Details (<code>/feedback/gripper_status</code>)<a class="headerlink" href="#gripper-status-details-feedbackgripper_status" title="Permanent link">&para;</a></h4>
+<p>Message type: <code>agx_arm_msgs/GripperStatus</code></p>
+<p><strong>Message Field Description:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>header</code></td>
+<td><code>std_msgs/Header</code></td>
+<td>Message header</td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td><code>float64</code></td>
+<td>Current gripper opening width (unit: meters)</td>
+</tr>
+<tr>
+<td><code>force</code></td>
+<td><code>float64</code></td>
+<td>Current gripping force (unit: Newtons)</td>
+</tr>
+<tr>
+<td><code>voltage_too_low</code></td>
+<td><code>bool</code></td>
+<td>Voltage too low (true=abnormal, false=normal)</td>
+</tr>
+<tr>
+<td><code>motor_overheating</code></td>
+<td><code>bool</code></td>
+<td>Motor overheating (true=abnormal, false=normal)</td>
+</tr>
+<tr>
+<td><code>driver_overcurrent</code></td>
+<td><code>bool</code></td>
+<td>Driver overcurrent (true=abnormal, false=normal)</td>
+</tr>
+<tr>
+<td><code>driver_overheating</code></td>
+<td><code>bool</code></td>
+<td>Driver overheating (true=abnormal, false=normal)</td>
+</tr>
+<tr>
+<td><code>sensor_status</code></td>
+<td><code>bool</code></td>
+<td>Sensor status (true=abnormal, false=normal)</td>
+</tr>
+<tr>
+<td><code>driver_error_status</code></td>
+<td><code>bool</code></td>
+<td>Driver error status (true=abnormal, false=normal)</td>
+</tr>
+<tr>
+<td><code>driver_enable_status</code></td>
+<td><code>bool</code></td>
+<td>Driver enable status (true=enabled, false=disabled)</td>
+</tr>
+<tr>
+<td><code>homing_status</code></td>
+<td><code>bool</code></td>
+<td>Homing status (true=completed, false=not completed)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="hand-status-details-feedbackhand_status">Hand Status Details (<code>/feedback/hand_status</code>)<a class="headerlink" href="#hand-status-details-feedbackhand_status" title="Permanent link">&para;</a></h4>
+<p>Message type: <code>agx_arm_msgs/HandStatus</code></p>
+<p><strong>Message Field Description:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>header</code></td>
+<td><code>std_msgs/Header</code></td>
+<td>Message header</td>
+</tr>
+<tr>
+<td><code>left_or_right</code></td>
+<td><code>uint8</code></td>
+<td>Hand type identifier: 1=left hand, 2=right hand</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Finger Position Fields (range: [0, 100], 0=fully open, 100=fully closed):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thumb_tip_pos</code></td>
+<td><code>uint8</code></td>
+<td>Thumb tip position</td>
+</tr>
+<tr>
+<td><code>thumb_base_pos</code></td>
+<td><code>uint8</code></td>
+<td>Thumb base position</td>
+</tr>
+<tr>
+<td><code>index_finger_pos</code></td>
+<td><code>uint8</code></td>
+<td>Index finger position</td>
+</tr>
+<tr>
+<td><code>middle_finger_pos</code></td>
+<td><code>uint8</code></td>
+<td>Middle finger position</td>
+</tr>
+<tr>
+<td><code>ring_finger_pos</code></td>
+<td><code>uint8</code></td>
+<td>Ring finger position</td>
+</tr>
+<tr>
+<td><code>pinky_finger_pos</code></td>
+<td><code>uint8</code></td>
+<td>Pinky finger position</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Finger Motor Status Fields (0=idle, 1=running, 2=stalled/jammed):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thumb_tip_status</code></td>
+<td><code>uint8</code></td>
+<td>Thumb tip motor status</td>
+</tr>
+<tr>
+<td><code>thumb_base_status</code></td>
+<td><code>uint8</code></td>
+<td>Thumb base motor status</td>
+</tr>
+<tr>
+<td><code>index_finger_status</code></td>
+<td><code>uint8</code></td>
+<td>Index finger motor status</td>
+</tr>
+<tr>
+<td><code>middle_finger_status</code></td>
+<td><code>uint8</code></td>
+<td>Middle finger motor status</td>
+</tr>
+<tr>
+<td><code>ring_finger_status</code></td>
+<td><code>uint8</code></td>
+<td>Ring finger motor status</td>
+</tr>
+<tr>
+<td><code>pinky_finger_status</code></td>
+<td><code>uint8</code></td>
+<td>Pinky finger motor status</td>
+</tr>
+</tbody>
+</table>
+<h3 id="control-topics">Control Topics<a class="headerlink" href="#control-topics" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Message Type</th>
+<th>Description</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/control/joint_states</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>Joint control (with end-effector)</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/control/move_j</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>Joint control motion</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/control/move_p</code></td>
+<td><code>geometry_msgs/PoseStamped</code></td>
+<td>Point-to-point motion</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/control/move_l</code></td>
+<td><code>geometry_msgs/PoseStamped</code></td>
+<td>Linear motion</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/control/move_c</code></td>
+<td><code>geometry_msgs/PoseArray</code></td>
+<td>Circular motion</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/control/move_js</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>MIT mode joint motion</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/control/move_mit</code></td>
+<td><code>agx_arm_msgs/MoveMITMsg</code></td>
+<td>MIT torque control</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/control/hand</code></td>
+<td><code>agx_arm_msgs/HandCmd</code></td>
+<td>Dexterous hand control</td>
+<td>Revo2 configured</td>
+</tr>
+<tr>
+<td><code>/control/hand_position_time</code></td>
+<td><code>agx_arm_msgs/HandPositionTimeCmd</code></td>
+<td>Hand position-time control</td>
+<td>Revo2 configured</td>
+</tr>
+</tbody>
+</table>
+<h4 id="controljoint_states-details"><code>/control/joint_states</code> Details<a class="headerlink" href="#controljoint_states-details" title="Permanent link">&para;</a></h4>
+<p>This topic uses the <code>sensor_msgs/JointState</code> message type and supports simultaneous control of arm joints and end-effector (gripper/dexterous hand). Only the joints to be controlled need to be sent; joints not included will not be affected.</p>
+<p><strong>Message Field Description:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>Joint name list</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td>Target position for corresponding joints</td>
+</tr>
+<tr>
+<td><code>velocity</code></td>
+<td>Not used (can be left empty)</td>
+</tr>
+<tr>
+<td><code>effort</code></td>
+<td>Used for gripper force control (only effective for <code>gripper</code> joint)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Gripper control via <code>/control/joint_states</code></strong> (requires <code>effector_type=agx_gripper</code>)</p>
+<p>Include <code>gripper</code> in <code>name</code>, set target width via <code>position</code>, and set gripping force via <code>effort</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Joint Name</th>
+<th>position (width)</th>
+<th>effort (force)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gripper</code></td>
+<td>Target width (m), range: [0.0, 0.1]</td>
+<td>Target force (N), range: [0.5, 3.0], default: 1.0</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> When <code>effort</code> is 0 or not specified, the default force of 1.0N is used.</p>
+</blockquote>
+<p>Example: Control gripper width to 0.05m with force 1.5N
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="w">  </span><span class="s2">&quot;{name: [gripper], position: [0.05], velocity: [], effort: [1.5]}&quot;</span><span class="w"> </span>-1
+</span></code></pre></div></p>
+<p><strong>Dexterous hand control via <code>/control/joint_states</code></strong> (requires <code>effector_type=revo2</code>)</p>
+<p>Include dexterous hand joint names in <code>name</code>, set the target position via <code>position</code> (position mode, unit: rad). Only the joints to be controlled need to be sent; joints not included will maintain their current position.</p>
+<p>Example: Control only the left index finger to position 0.5 rad
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="w">  </span><span class="s2">&quot;{name: [left_index_proximal_joint], position: [0.5], velocity: [], effort: []}&quot;</span><span class="w"> </span>-1
+</span></code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>Joint Name</th>
+<th>Description</th>
+<th>Position Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>left_thumb_metacarpal_joint</code> / <code>right_thumb_metacarpal_joint</code></td>
+<td>Thumb base</td>
+<td>[0, 1.57]</td>
+</tr>
+<tr>
+<td><code>left_thumb_proximal_joint</code> / <code>right_thumb_proximal_joint</code></td>
+<td>Thumb tip</td>
+<td>[0, 1.03]</td>
+</tr>
+<tr>
+<td><code>left_index_proximal_joint</code> / <code>right_index_proximal_joint</code></td>
+<td>Index finger</td>
+<td>[0, 1.41]</td>
+</tr>
+<tr>
+<td><code>left_middle_proximal_joint</code> / <code>right_middle_proximal_joint</code></td>
+<td>Middle finger</td>
+<td>[0, 1.41]</td>
+</tr>
+<tr>
+<td><code>left_ring_proximal_joint</code> / <code>right_ring_proximal_joint</code></td>
+<td>Ring finger</td>
+<td>[0, 1.41]</td>
+</tr>
+<tr>
+<td><code>left_pinky_proximal_joint</code> / <code>right_pinky_proximal_joint</code></td>
+<td>Pinky finger</td>
+<td>[0, 1.41]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="controlmove_mit-details"><code>/control/move_mit</code> Details<a class="headerlink" href="#controlmove_mit-details" title="Permanent link">&para;</a></h4>
+<p>Message type: <code>agx_arm_msgs/MoveMITMsg</code></p>
+<p><strong>Message Field Description:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>joint_index</code></td>
+<td><code>int32[]</code></td>
+<td>Array of joint indices to control</td>
+</tr>
+<tr>
+<td><code>p_des</code></td>
+<td><code>float64[]</code></td>
+<td>Desired joint position array (unit: radians)</td>
+</tr>
+<tr>
+<td><code>v_des</code></td>
+<td><code>float64[]</code></td>
+<td>Desired joint velocity array (unit: radians/second)</td>
+</tr>
+<tr>
+<td><code>kp</code></td>
+<td><code>float64[]</code></td>
+<td>Position gain array</td>
+</tr>
+<tr>
+<td><code>kd</code></td>
+<td><code>float64[]</code></td>
+<td>Velocity gain array</td>
+</tr>
+<tr>
+<td><code>torque</code></td>
+<td><code>float64[]</code></td>
+<td>Desired joint torque array (unit: Newton-meters, N·m)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> All array fields must have the same length as <code>joint_index</code>. Supports simultaneous control of multiple joints.</p>
+</blockquote>
+<h4 id="controlhand-details"><code>/control/hand</code> Details<a class="headerlink" href="#controlhand-details" title="Permanent link">&para;</a></h4>
+<p>Message type: <code>agx_arm_msgs/HandCmd</code></p>
+<p><strong>Message Field Description:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td>Control mode: <code>position</code> (position) / <code>speed</code> (speed) / <code>current</code> (current)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Finger Target Value Fields:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thumb_tip</code></td>
+<td><code>int8</code></td>
+<td>Thumb tip target value</td>
+</tr>
+<tr>
+<td><code>thumb_base</code></td>
+<td><code>int8</code></td>
+<td>Thumb base target value</td>
+</tr>
+<tr>
+<td><code>index_finger</code></td>
+<td><code>int8</code></td>
+<td>Index finger target value</td>
+</tr>
+<tr>
+<td><code>middle_finger</code></td>
+<td><code>int8</code></td>
+<td>Middle finger target value</td>
+</tr>
+<tr>
+<td><code>ring_finger</code></td>
+<td><code>int8</code></td>
+<td>Ring finger target value</td>
+</tr>
+<tr>
+<td><code>pinky_finger</code></td>
+<td><code>int8</code></td>
+<td>Pinky finger target value</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Value Ranges for Different Modes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Value Range</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>position</code></td>
+<td>[0, 100]</td>
+<td>0=fully open, 100=fully closed</td>
+</tr>
+<tr>
+<td><code>speed</code></td>
+<td>[-100, 100]</td>
+<td>Negative=open direction, positive=close direction</td>
+</tr>
+<tr>
+<td><code>current</code></td>
+<td>[-100, 100]</td>
+<td>Negative=open direction, positive=close direction</td>
+</tr>
+</tbody>
+</table>
+<h4 id="controlhand_position_time-details"><code>/control/hand_position_time</code> Details<a class="headerlink" href="#controlhand_position_time-details" title="Permanent link">&para;</a></h4>
+<p>Message type: <code>agx_arm_msgs/HandPositionTimeCmd</code></p>
+<p><strong>Message Field Description:</strong></p>
+<p><strong>Finger Target Position Fields (range: [0, 100], 0=fully open, 100=fully closed):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thumb_tip_pos</code></td>
+<td><code>int8</code></td>
+<td>Thumb tip position</td>
+</tr>
+<tr>
+<td><code>thumb_base_pos</code></td>
+<td><code>int8</code></td>
+<td>Thumb base position</td>
+</tr>
+<tr>
+<td><code>index_finger_pos</code></td>
+<td><code>int8</code></td>
+<td>Index finger position</td>
+</tr>
+<tr>
+<td><code>middle_finger_pos</code></td>
+<td><code>int8</code></td>
+<td>Middle finger position</td>
+</tr>
+<tr>
+<td><code>ring_finger_pos</code></td>
+<td><code>int8</code></td>
+<td>Ring finger position</td>
+</tr>
+<tr>
+<td><code>pinky_finger_pos</code></td>
+<td><code>int8</code></td>
+<td>Pinky finger position</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Finger Arrival Time Fields (unit: 10ms, range: [0, 255], e.g.: 200 = 2 seconds):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thumb_tip_time</code></td>
+<td><code>uint8</code></td>
+<td>Thumb tip arrival time</td>
+</tr>
+<tr>
+<td><code>thumb_base_time</code></td>
+<td><code>uint8</code></td>
+<td>Thumb base arrival time</td>
+</tr>
+<tr>
+<td><code>index_finger_time</code></td>
+<td><code>uint8</code></td>
+<td>Index finger arrival time</td>
+</tr>
+<tr>
+<td><code>middle_finger_time</code></td>
+<td><code>uint8</code></td>
+<td>Middle finger arrival time</td>
+</tr>
+<tr>
+<td><code>ring_finger_time</code></td>
+<td><code>uint8</code></td>
+<td>Ring finger arrival time</td>
+</tr>
+<tr>
+<td><code>pinky_finger_time</code></td>
+<td><code>uint8</code></td>
+<td>Pinky finger arrival time</td>
+</tr>
+</tbody>
+</table>
+<h3 id="services">Services<a class="headerlink" href="#services" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Type</th>
+<th>Description</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/enable_agx_arm</code></td>
+<td><code>std_srvs/SetBool</code></td>
+<td>Enable/disable arm</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/move_home</code></td>
+<td><code>std_srvs/Empty</code></td>
+<td>Move to home position</td>
+<td>Always available</td>
+</tr>
+<tr>
+<td><code>/exit_teach_mode</code></td>
+<td><code>std_srvs/Empty</code></td>
+<td>Exit teach mode</td>
+<td>Piper series</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="parameter-limits">Parameter Limits<a class="headerlink" href="#parameter-limits" title="Permanent link">&para;</a></h2>
+<h3 id="gripper_1">Gripper<a class="headerlink" href="#gripper_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Range</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width</td>
+<td>[0.0, 0.1] m</td>
+<td>-</td>
+<td>Target opening width</td>
+</tr>
+<tr>
+<td>force</td>
+<td>[0.5, 3.0] N</td>
+<td>1.0</td>
+<td>Gripping force</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ Values out of range will be rejected (not executed), and the node will output a warning log. For example: when sending force=5.0, the command will not be executed, and a warning <code>force must be in range [0.5, 3.0], current value: 5.0</code> will be output.</p>
+</blockquote>
+<h3 id="dexterous-hand-revo2">Dexterous Hand (Revo2)<a class="headerlink" href="#dexterous-hand-revo2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Range</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>position</td>
+<td>[0, 100]</td>
+<td>Finger target position, 0 = fully open, 100 = fully closed</td>
+</tr>
+<tr>
+<td>speed</td>
+<td>[-100, 100]</td>
+<td>Finger motion speed</td>
+</tr>
+<tr>
+<td>current</td>
+<td>[-100, 100]</td>
+<td>Finger drive current</td>
+</tr>
+<tr>
+<td>time</td>
+<td>[0, 255]</td>
+<td>Time to reach target position (unit: 10ms, e.g. 100 = 1 second)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ Values out of range will be rejected (not executed), and the node will output a warning log. For example: when sending position=120, the command will not be executed, and a warning <code>position must be in range [0, 100], current value: 120</code> will be output.</p>
+</blockquote>
+<hr />
+<h2 id="important-notes">Important Notes<a class="headerlink" href="#important-notes" title="Permanent link">&para;</a></h2>
+<h3 id="can-communication">CAN Communication<a class="headerlink" href="#can-communication" title="Permanent link">&para;</a></h3>
+<ul>
+<li>CAN module <strong>must be activated</strong> before use</li>
+<li>Baud rate: <strong>1000000 bps</strong></li>
+<li>If <code>SendCanMessage failed</code> error occurs, check CAN connection</li>
+</ul>
+<h3 id="safety-warnings">⚠️ Safety Warnings<a class="headerlink" href="#safety-warnings" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Maintain safe distance</strong>: Do not enter the arm's workspace during motion to avoid injury</li>
+<li><strong>Singularity risk</strong>: Joints may move suddenly and significantly near kinematic singularities</li>
+<li><strong>MIT mode is dangerous</strong>: High-speed response MIT mode is extremely hazardous, use with caution</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../README_CN/" class="md-footer__link md-footer__link--prev" aria-label="Previous: README (中文)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                README (中文)
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 The authors
+
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["announce.dismiss","content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight"],"search":"../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.91a19a9e.min.js"></script>
+      
+    
+  </body>
+</html>

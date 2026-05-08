@@ -1,0 +1,3381 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Moveit gudie using piper_arm">
+      
+      
+        <meta name="author" content="Wong Wei Ming">
+      
+      
+      
+        <link rel="prev" href="../tcp_offset/TCP_OFFSET/">
+      
+      
+        <link rel="next" href="../README_EN/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.31">
+    
+    
+      
+        <title>AgileX 机械臂 ROS2 驱动 - Piper Arm Moveit2</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.53a7feaf.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#agilex-ros2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="./.." title="Piper Arm Moveit2" class="md-header__button md-logo" aria-label="Piper Arm Moveit2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Piper Arm Moveit2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AgileX 机械臂 ROS2 驱动
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="./.." title="Piper Arm Moveit2" class="md-nav__button md-logo" aria-label="Piper Arm Moveit2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    Piper Arm Moveit2
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-rocket" viewBox="0 0 24 24"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../teaching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Positions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensor Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CAN_USER_EN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CAN Setup (EN)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CAN_USER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CAN Setup (中文)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Q&A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tcp_offset/TCP_OFFSET/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TCP Offset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    README (中文)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    README (中文)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概述
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快速开始
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="快速开始">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-python-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 安装 Python SDK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 安装 ROS2 驱动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 安装依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.编译并Source工作空间
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用说明
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#can" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        激活 CAN 模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启动驱动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启动参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URDF 模型可视化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="URDF 模型可视化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        独立查看模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#follow-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        典型应用组合示例（follow / control）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        控制示例
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="控制示例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#piper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Piper 机械臂
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nero 机械臂
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gripper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gripper 夹爪
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hand 灵巧手
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        服务调用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        状态订阅
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROS2 接口
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ROS2 接口">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        反馈话题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="反馈话题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feedbackjoint_states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /feedback/joint_states 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feedbackarm_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /feedback/arm_status 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feedbackgripper_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /feedback/gripper_status 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feedbackhand_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /feedback/hand_status 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        控制话题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="控制话题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controljoint_states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/joint_states 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlmove_mit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/move_mit 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlhand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/hand 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlhand_position_time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/hand_position_time 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        服务
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参数限制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参数限制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gripper_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        夹爪 (Gripper)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revo2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        灵巧手 (Revo2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        注意事项
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="注意事项">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#can_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CAN 通信
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 安全警告
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../README_EN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    README (EN)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概述
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快速开始
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="快速开始">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-python-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 安装 Python SDK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 安装 ROS2 驱动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 安装依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.编译并Source工作空间
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用说明
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#can" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        激活 CAN 模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启动驱动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启动参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URDF 模型可视化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="URDF 模型可视化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        独立查看模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#follow-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        典型应用组合示例（follow / control）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        控制示例
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="控制示例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#piper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Piper 机械臂
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nero 机械臂
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gripper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gripper 夹爪
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hand 灵巧手
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        服务调用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        状态订阅
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROS2 接口
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ROS2 接口">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        反馈话题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="反馈话题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feedbackjoint_states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /feedback/joint_states 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feedbackarm_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /feedback/arm_status 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feedbackgripper_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /feedback/gripper_status 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feedbackhand_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /feedback/hand_status 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        控制话题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="控制话题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controljoint_states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/joint_states 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlmove_mit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/move_mit 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlhand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/hand 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlhand_position_time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /control/hand_position_time 详细说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        服务
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参数限制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参数限制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gripper_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        夹爪 (Gripper)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revo2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        灵巧手 (Revo2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        注意事项
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="注意事项">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#can_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CAN 通信
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 安全警告
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<h1 id="agilex-ros2">AgileX 机械臂 ROS2 驱动<a class="headerlink" href="#agilex-ros2" title="Permanent link">&para;</a></h1>
+<p><a href=".././README_EN/">English</a></p>
+<table>
+<thead>
+<tr>
+<th>ROS</th>
+<th>STATE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="humble" src="https://img.shields.io/badge/ros-humble-blue.svg" /></td>
+<td><img alt="Pass" src="https://img.shields.io/badge/Pass-blue.svg" /></td>
+</tr>
+<tr>
+<td><img alt="jazzy" src="https://img.shields.io/badge/ros-jazzy-blue.svg" /></td>
+<td><img alt="Pass" src="https://img.shields.io/badge/Pass-blue.svg" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>本驱动包为 AgileX 系列机械臂（Piper、Nero 等）提供完整的 ROS2 接口支持。</p>
+<table>
+<thead>
+<tr>
+<th>说明</th>
+<th>文档</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SDK</td>
+<td><a href="https://github.com/agilexrobotics/pyAgxArm">pyAgxArm</a></td>
+</tr>
+<tr>
+<td>官方CAN模块的使用</td>
+<td><a href=".././docs/CAN_USER/">can_user</a></td>
+</tr>
+<tr>
+<td>TCP偏移设置</td>
+<td><a href=".././docs/tcp_offset/TCP_OFFSET/">tcp_offset</a></td>
+</tr>
+<tr>
+<td>URDF</td>
+<td><a href="https://github.com/agilexrobotics/agx_arm_urdf">URDF</a></td>
+</tr>
+<tr>
+<td>Moveit</td>
+<td><a href=".././src/agx_arm_moveit/">Moveit</a></td>
+</tr>
+<tr>
+<td>Q&amp;A</td>
+<td><a href=".././docs/Q&amp;A/">Q&amp;A</a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_2">快速开始<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="1-python-sdk">1. 安装 Python SDK<a class="headerlink" href="#1-python-sdk" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/agilexrobotics/pyAgxArm.git
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>pyAgxArm
+</span></code></pre></div>
+<p>根据你的 ROS 版本选择安装命令：</p>
+<p><strong>Jazzy</strong> 安装命令：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip3<span class="w"> </span>install<span class="w"> </span>.<span class="w"> </span>--break-system-packages
+</span></code></pre></div>
+<p><strong>Humble</strong> 安装命令：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip3<span class="w"> </span>install<span class="w"> </span>.
+</span></code></pre></div>
+<h3 id="2-ros2">2. 安装 ROS2 驱动<a class="headerlink" href="#2-ros2" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>创建工作空间</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/agx_arm_ws/src
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">cd</span><span class="w"> </span>~/agx_arm_ws/src
+</span></code></pre></div>
+</li>
+<li>
+<p>克隆仓库</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>ros2<span class="w"> </span>--recurse-submodules<span class="w"> </span>https://github.com/agilexrobotics/agx_arm_ros.git
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>agx_arm_ros/
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--remote<span class="w"> </span>--recursive
+</span></code></pre></div>
+</li>
+</ol>
+<h3 id="3">3. 安装依赖<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>运行脚本一键安装所有依赖</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>~/agx_arm_ws/src/agx_arm_ros/scripts/
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>agx_arm_install_deps.sh
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>bash<span class="w"> </span>./agx_arm_install_deps.sh
+</span></code></pre></div>
+<p>或者依次执行以下命令手动安装：</p>
+<ol>
+<li>
+<p>Python 依赖</p>
+<p>根据你的 ROS 版本选择安装命令：</p>
+<p><strong>Jazzy</strong> 安装命令:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip3<span class="w"> </span>install<span class="w"> </span>python-can<span class="w"> </span>scipy<span class="w"> </span>numpy<span class="w"> </span>--break-system-packages
+</span></code></pre></div>
+<p><strong>Humble</strong> 安装命令:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip3<span class="w"> </span>install<span class="w"> </span>python-can<span class="w"> </span>scipy<span class="w"> </span>numpy
+</span></code></pre></div>
+</li>
+<li>
+<p>CAN 工具</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>can-utils<span class="w"> </span>ethtool
+</span></code></pre></div>
+</li>
+<li>
+<p>ROS2 依赖</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-ros2-control<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-ros2-controllers<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-controller-manager<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-topic-tools<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-joint-state-publisher-gui<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-robot-state-publisher<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-xacro<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span>python3-colcon-common-extensions
+</span></code></pre></div>
+</li>
+<li>
+<p>Moveit</p>
+<p>使用 MoveIt 前，需先配置相关依赖。 具体步骤请参考：<a href=".././src/agx_arm_moveit/">agx_arm_moveit</a></p>
+<p>或者依次执行以下命令进行配置：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-<span class="nv">$ROS_DISTRO</span>-moveit*
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-control*<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-joint-trajectory-controller<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-joint-state-*<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-gripper-controllers<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span>ros-<span class="nv">$ROS_DISTRO</span>-trajectory-msgs
+</span></code></pre></div>
+<p>若系统语言区域设置不为英文区域，须设置为英文区域</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export LC_NUMERIC=en_US.UTF-8&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</span></code></pre></div>
+</li>
+</ol>
+<h3 id="4source">4.编译并Source工作空间<a class="headerlink" href="#4source" title="Permanent link">&para;</a></h3>
+<p>检查是否在虚拟环境里，如果是，建议先退出虚拟环境。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>which<span class="w"> </span>pip3
+</span></code></pre></div>
+<p>编译工作空间并加载环境配置：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nb">cd</span><span class="w"> </span>~/agx_arm_ws
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>colcon<span class="w"> </span>build
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="nb">source</span><span class="w"> </span>install/setup.bash
+</span></code></pre></div>
+<hr />
+<h2 id="_3">使用说明<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="can">激活 CAN 模块<a class="headerlink" href="#can" title="Permanent link">&para;</a></h3>
+<p>使用前需先激活 CAN 模块，详见：<a href=".././docs/CAN_USER/">CAN 配置指南</a></p>
+<p>当电脑仅连接单个 CAN 模块时，可通过以下步骤<strong>快速完成激活</strong>：</p>
+<p>打开一个终端窗口，执行以下命令：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">cd</span><span class="w"> </span>~/agx_arm_ws/src/agx_arm_ros/scripts<span class="w"> </span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>bash<span class="w"> </span>can_activate.sh
+</span></code></pre></div>
+<h3 id="_4">启动驱动<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>您可以通过 launch 文件或直接运行节点来启动驱动。</p>
+<blockquote>
+<p><strong>重要提示：启动前必读</strong>
+以下启动命令中的参数<strong>必须</strong>根据您的实际硬件配置进行替换：
+- <strong><code>can_port</code></strong>：机械臂连接的 CAN 端口，示例值 <code>can0</code>。
+- <strong><code>arm_type</code></strong>：机械臂的型号，示例值 <code>piper</code>。
+- <strong><code>effector_type</code></strong>：末端执行器类型，示例值 <code>none</code> 或 <code>agx_gripper</code>。
+- <strong><code>tcp_offset</code></strong>：工具中心（TCP）相对法兰盘中心的偏移量，示例值：[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  - 注意 ：<code>tcp_offset</code> 所有值均需为浮点数；关于 TCP 偏移实际配置示例，请参考 <a href=".././docs/tcp_offset/TCP_OFFSET/">TCP 设置详解</a>。</p>
+<p>所有参数的完整说明、默认值及可选值，请参阅下方的 <strong><a href="#启动参数">启动参数</a></strong> 。</p>
+</blockquote>
+<p><strong>使用 launch 文件启动：</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>effector_type:<span class="o">=</span>none<span class="w"> </span>tcp_offset:<span class="o">=</span><span class="s1">&#39;[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]&#39;</span>
+</span></code></pre></div>
+<p><strong>直接运行节点启动:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>agx_arm_ctrl_single<span class="w"> </span>--ros-args<span class="w"> </span>-p<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>-p<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>-p<span class="w"> </span>effector_type:<span class="o">=</span>none<span class="w"> </span>-p<span class="w"> </span>tcp_offset:<span class="o">=</span><span class="s1">&#39;[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]&#39;</span>
+</span></code></pre></div>
+<p><strong>可视化调试启动:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm_rviz.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>effector_type:<span class="o">=</span>none<span class="w"> </span>tcp_offset:<span class="o">=</span><span class="s1">&#39;[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]&#39;</span>
+</span></code></pre></div>
+<blockquote>
+<p><strong>注意：</strong>
+- <code>start_single_agx_arm_rviz.launch</code> 会订阅 <code>/feedback/joint_states</code> 话题；通过参数 <code>control</code> 可控制是否从 RViz 侧发布 <code>/control/joint_states</code>（默认 <code>control:=false</code>，不会从 RViz 发布控制话题）。
+- 若希望仅用于可视化跟随真实机械臂状态，推荐保持 <code>control:=false</code>；
+- 若希望使用 RViz 自带的关节滑条控制 <code>/control/joint_states</code>，可显式设置 <code>control:=true</code>，此时可能会与 <a href="#控制示例">控制示例</a> 中的控制指令产生冲突。</p>
+</blockquote>
+<p><strong>MoveIt 一键启动（臂控 + MoveIt + RViz）：</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm_moveit.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>effector_type:<span class="o">=</span>agx_gripper
+</span></code></pre></div>
+<blockquote>
+<p>该 launch 文件同时启动机械臂控制节点和 MoveIt2，自动将关节反馈 (<code>/feedback/joint_states</code>) 接入 MoveIt，无需手动分两个终端启动。支持所有 <code>agx_arm_ctrl</code> 的参数（如 <code>tcp_offset</code>、<code>speed_percent</code> 等），详见 <a href=".././src/agx_arm_moveit/">Moveit</a>。</p>
+</blockquote>
+<h3 id="_5">启动参数<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>说明</th>
+<th>可选值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>can_port</code></td>
+<td><code>can0</code></td>
+<td>CAN 端口</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>arm_type</code></td>
+<td><code>piper</code></td>
+<td>机械臂型号</td>
+<td><code>nero</code>, <code>piper</code>, <code>piper_h</code>, <code>piper_l</code>, <code>piper_x</code></td>
+</tr>
+<tr>
+<td><code>effector_type</code></td>
+<td><code>none</code></td>
+<td>末端执行器类型</td>
+<td><code>none</code>, <code>agx_gripper</code>, <code>revo2</code></td>
+</tr>
+<tr>
+<td><code>revo2_type</code></td>
+<td><code>left</code></td>
+<td>Revo2 灵巧手类型</td>
+<td><code>left</code>, <code>right</code></td>
+</tr>
+<tr>
+<td><code>auto_enable</code></td>
+<td><code>true</code></td>
+<td>启动时自动使能</td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>installation_pos</code></td>
+<td><code>horizontal</code></td>
+<td>安装方向 (Piper 系列专用)</td>
+<td><code>horizontal</code>, <code>left</code>, <code>right</code></td>
+</tr>
+<tr>
+<td><code>payload</code></td>
+<td><code>empty</code></td>
+<td>负载配置 (暂时只对piper系列生效)</td>
+<td><code>full</code>, <code>half</code>, <code>empty</code></td>
+</tr>
+<tr>
+<td><code>speed_percent</code></td>
+<td><code>100</code></td>
+<td>运动速度 (%)</td>
+<td><code>0-100</code></td>
+</tr>
+<tr>
+<td><code>pub_rate</code></td>
+<td><code>200</code></td>
+<td>状态发布频率 (Hz)</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>enable_timeout</code></td>
+<td><code>5.0</code></td>
+<td>使能超时 (秒)</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>tcp_offset</code></td>
+<td><code>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]</code></td>
+<td>工具中心(TCP)相对法兰盘中心的偏移 [x, y, z, rx, ry, rz]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>publish_gripper_joint</code></td>
+<td><code>true</code></td>
+<td>是否在 <code>/feedback/joint_states</code> 中发布 <code>gripper</code> 关节（夹爪开口宽度）。与 MoveIt 联用时设为 <code>false</code>，因 URDF 中仅有 <code>gripper_joint1</code>/<code>gripper_joint2</code></td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>log_level</code></td>
+<td><code>info</code></td>
+<td>日志级别</td>
+<td><code>debug</code>, <code>info</code>, <code>warn</code>, <code>error</code>, <code>fatal</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="urdf">URDF 模型可视化<a class="headerlink" href="#urdf" title="Permanent link">&para;</a></h3>
+<h4 id="_6">独立查看模型<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p>在 RViz 中加载 URDF 模型并通过 GUI 滑条手动调试关节，可以不启动机械臂节点：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_description<span class="w"> </span>display.launch.py<span class="w"> </span>arm_type:<span class="o">=</span>piper
+</span></code></pre></div>
+<p><strong>支持以下三种方式指定模型：</strong></p>
+<ol>
+<li>
+<p><strong>预设型号名称（通过 <code>arm_type</code> 指定）</strong>（推荐）：直接使用内置型号名，自动匹配对应 URDF 文件</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_description<span class="w"> </span>display.launch.py<span class="w"> </span>arm_type:<span class="o">=</span>piper
+</span></code></pre></div>
+</li>
+<li>
+<p><strong>相对路径（通过 <code>custom_model</code> 指定）</strong>：相对于 <code>agx_arm_urdf/</code> 目录的路径，适用于自定义模型  </p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_description<span class="w"> </span>display.launch.py<span class="w"> </span>custom_model:<span class="o">=</span>piper/urdf/piper_description.urdf
+</span></code></pre></div>
+</li>
+<li>
+<p><strong>绝对路径（通过 <code>custom_model</code> 指定）</strong>：直接指定 URDF 文件的绝对路径，适用于任意位置的模型文件</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_description<span class="w"> </span>display.launch.py<span class="w"> </span>custom_model:<span class="o">=</span>~/agx_arm_ws/src/agx_arm_ros/src/agx_arm_description/agx_arm_urdf/piper/urdf/piper_description.urdf
+</span></code></pre></div>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>arm_type</code></td>
+<td><code>piper</code></td>
+<td>机械臂型号，预设值：<code>nero</code>, <code>piper</code>, <code>piper_h</code>, <code>piper_l</code>, <code>piper_x</code></td>
+</tr>
+<tr>
+<td><code>custom_model</code></td>
+<td>空字符串</td>
+<td>可选自定义模型路径；相对路径时相对于 <code>agx_arm_urdf/</code> 目录，绝对路径可指向任意 URDF/xacro 文件。若设置该参数，则 <code>arm_type</code> 和 <code>effector_type</code> 将被忽略</td>
+</tr>
+<tr>
+<td><code>effector_type</code></td>
+<td><code>none</code></td>
+<td>末端执行器类型，预设值：<code>none</code>, <code>agx_gripper</code>, <code>revo2</code></td>
+</tr>
+<tr>
+<td><code>revo2_type</code></td>
+<td><code>left</code></td>
+<td>Revo2 灵巧手类型，预设值：<code>left</code>, <code>right</code></td>
+</tr>
+<tr>
+<td><code>pub_rate</code></td>
+<td><code>200</code></td>
+<td>状态发布频率 (Hz)</td>
+</tr>
+<tr>
+<td><code>gui</code></td>
+<td><code>true</code></td>
+<td>是否启用 joint_state_publisher_gui 关节滑条控制界面</td>
+</tr>
+<tr>
+<td><code>rvizconfig</code></td>
+<td>内置配置</td>
+<td>自定义 RViz 配置文件的绝对路径</td>
+</tr>
+<tr>
+<td><code>follow</code></td>
+<td><code>false</code></td>
+<td>是否跟随真实机械臂状态（订阅 <code>/feedback/joint_states</code>，并在 robot_state_publisher 中重映射 <code>/joint_states</code> 为 <code>feedback/joint_states</code>）</td>
+</tr>
+<tr>
+<td><code>tcp_offset</code></td>
+<td><code>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]</code></td>
+<td>TCP 偏移 [x, y, z, rx, ry, rz]（米/弧度）。非零时自动发布 <code>tcp_link</code> 坐标系</td>
+</tr>
+<tr>
+<td><code>control</code></td>
+<td><code>true</code></td>
+<td>是否通过 joint_state_publisher（或 GUI 版本）发布控制话题：<code>true</code> 时发布到 <code>control/joint_states</code>；<code>false</code> 时仅用于跟随或显示，不发布控制话题。与 <code>follow:=true</code> 配合时，常用组合为 <code>follow:=true, control:=false</code>（只跟随真实机械臂，不从 RViz 发出控制）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="follow-control">典型应用组合示例（follow / control）<a class="headerlink" href="#follow-control" title="Permanent link">&para;</a></h4>
+<p>下面给出几种<strong>常见使用场景</strong>下，<code>follow</code> 与 <code>control</code> 的推荐组合及对应示例指令：</p>
+<ul>
+<li><strong>场景 1：纯模型调试（无真机，仅看 URDF、用滑条拖动）</strong>  </li>
+<li>是否需要真机：否  </li>
+<li>推荐配置：<code>follow:=false, control:=true</code>  </li>
+<li>
+<p>示例：<br />
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_description<span class="w"> </span>display.launch.py<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>follow:<span class="o">=</span><span class="nb">false</span><span class="w"> </span>control:<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>场景 2：真机 + 仅控制不跟随</strong>（从 RViz 发控制，但 RViz 不显示真实反馈）  </p>
+</li>
+<li>是否需要真机：是  </li>
+<li>推荐配置：<code>follow:=false, control:=true</code>  </li>
+<li>
+<p>示例：<br />
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm_rviz.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>follow:<span class="o">=</span><span class="nb">false</span><span class="w"> </span>control:<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>场景 3：真机 + 仅跟随不控制</strong>（常见：只看状态，不希望 RViz 干扰控制）  </p>
+</li>
+<li>是否需要真机：是  </li>
+<li>推荐配置：<code>follow:=true, control:=false</code>  </li>
+<li>
+<p>示例：<br />
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm_rviz.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>follow:<span class="o">=</span><span class="nb">true</span><span class="w"> </span>control:<span class="o">=</span><span class="nb">false</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>场景 4：真机 + 控制 + 跟随</strong>（从 RViz 发控制，并在 RViz 跟随真实反馈）  </p>
+</li>
+<li>是否需要真机：是  </li>
+<li>推荐配置：<code>follow:=true, control:=true</code></li>
+<li>示例：<br />
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>agx_arm_ctrl<span class="w"> </span>start_single_agx_arm_rviz.launch.py<span class="w"> </span>can_port:<span class="o">=</span>can0<span class="w"> </span>arm_type:<span class="o">=</span>piper<span class="w"> </span>follow:<span class="o">=</span><span class="nb">true</span><span class="w"> </span>control:<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div></li>
+</ul>
+<blockquote>
+<p><strong>提示：</strong> 一般情况下，建议<strong>控制通道保持唯一</strong>，即只保留一个组件负责发布 <code>/control/*</code> 话题（如 <code>agx_arm_ctrl</code> 节点、MoveIt、或 RViz 中的 joint_state_publisher 三者选其一），以避免多源控制导致冲突。</p>
+</blockquote>
+<hr />
+<h2 id="_7">控制示例<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>额外启动一个终端,运行以下指令:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nb">cd</span><span class="w"> </span>~/agx_arm_ws
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="nb">source</span><span class="w"> </span>install/setup.bash
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="nb">cd</span><span class="w"> </span>src/agx_arm_ros
+</span></code></pre></div>
+<h3 id="piper">Piper 机械臂<a class="headerlink" href="#piper" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>关节运动</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_j<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_move_j.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>点到点运动</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_p<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_move_p.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>直线运动</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_l<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_move_l.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>圆弧运动（起点 → 中间点 → 终点）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_c<span class="w"> </span>geometry_msgs/msg/PoseArray<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_move_c.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+</ol>
+<h3 id="nero">Nero 机械臂<a class="headerlink" href="#nero" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>关节运动</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_j<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/nero/test_move_j.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>点到点运动</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_p<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/nero/test_move_p.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>直线运动</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_l<span class="w"> </span>geometry_msgs/msg/PoseStamped<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/nero/test_move_l.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>圆弧运动（起点 → 中间点 → 终点）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/move_c<span class="w"> </span>geometry_msgs/msg/PoseArray<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/nero/test_move_c.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+</ol>
+<h3 id="gripper">Gripper 夹爪<a class="headerlink" href="#gripper" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>夹爪控制（通过 <code>/control/joint_states</code>控制）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/gripper/test_gripper_joint_states.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>机械臂 + 夹爪联合控制（通过 <code>/control/joint_states</code>控制）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_arm_gripper_joint_states.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+</ol>
+<blockquote>
+<p><strong>注意：</strong> 以上夹爪控制指令，需在 launch 文件或参数中设置 <code>effector_type=agx_gripper</code>。</p>
+</blockquote>
+<h3 id="hand">Hand 灵巧手<a class="headerlink" href="#hand" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>灵巧手 — 位置模式（所有手指移动到 10）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/hand<span class="w"> </span>agx_arm_msgs/msg/HandCmd<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/hand/test_hand_position.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>灵巧手 — 速度模式（所有手指速度 50）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/hand<span class="w"> </span>agx_arm_msgs/msg/HandCmd<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/hand/test_hand_speed.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>灵巧手 — 电流模式（所有手指电流 50）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/hand<span class="w"> </span>agx_arm_msgs/msg/HandCmd<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/hand/test_hand_current.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>灵巧手 — 位置-时间控制（所有手指移动到 50，时间 1 秒）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/hand_position_time<span class="w"> </span>agx_arm_msgs/msg/HandPositionTimeCmd<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/hand/test_hand_position_time.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>灵巧手控制（通过 <code>/control/joint_states</code>控制）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/hand/test_hand_joint_states.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+<li>
+<p>机械臂 + 灵巧手联合控制（通过 <code>/control/joint_states</code>控制）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>test/piper/test_arm_hand_joint_states.yaml<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-1
+</span></code></pre></div>
+</li>
+</ol>
+<blockquote>
+<p><strong>注意：</strong> 以上灵巧手控制指令，需在 launch 文件或参数中设置 <code>effector_type=revo2</code>。</p>
+</blockquote>
+<h3 id="_8">服务调用<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>使能机械臂</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/enable_agx_arm<span class="w"> </span>std_srvs/srv/SetBool<span class="w"> </span><span class="s2">&quot;{data: true}&quot;</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>失能机械臂</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/enable_agx_arm<span class="w"> </span>std_srvs/srv/SetBool<span class="w"> </span><span class="s2">&quot;{data: false}&quot;</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>回零位</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/move_home<span class="w"> </span>std_srvs/srv/Empty
+</span></code></pre></div>
+</li>
+<li>
+<p>退出示教模式（Piper 系列）</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/exit_teach_mode<span class="w"> </span>std_srvs/srv/Empty
+</span></code></pre></div>
+<blockquote>
+<p><strong>⚠️ 重要安全提示:</strong> 
+1. 执行该指令后，机械臂会先执行回零位操作，随后自动重启；此过程中机械臂存在坠落风险，建议在回零位完成后用手轻扶机械臂，防止坠落损坏。
+2. Piper 系列机器臂若固件版本为 1.8.5 及以上，已支持 模式无缝切换 功能，无需执行上述退出示教模式的服务指令，系统会自动完成模式切换，可规避上述坠落风险。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="_9">状态订阅<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>关节状态</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/joint_states
+</span></code></pre></div>
+</li>
+<li>
+<p>TCP 位姿</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/tcp_pose
+</span></code></pre></div>
+</li>
+<li>
+<p>机械臂状态</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/arm_status
+</span></code></pre></div>
+</li>
+<li>
+<p>主导臂关节角度(主导臂模式下使用)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/leader_joint_angles
+</span></code></pre></div>
+</li>
+<li>
+<p>夹爪状态</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/gripper_status
+</span></code></pre></div>
+</li>
+<li>
+<p>灵巧手状态</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/feedback/hand_status
+</span></code></pre></div>
+</li>
+</ol>
+<hr />
+<h2 id="ros2">ROS2 接口<a class="headerlink" href="#ros2" title="Permanent link">&para;</a></h2>
+<h3 id="_10">反馈话题<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>话题</th>
+<th>消息类型</th>
+<th>说明</th>
+<th>适用条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/feedback/joint_states</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>关节状态</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/feedback/tcp_pose</code></td>
+<td><code>geometry_msgs/PoseStamped</code></td>
+<td>TCP 位姿</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/feedback/arm_status</code></td>
+<td><code>agx_arm_msgs/AgxArmStatus</code></td>
+<td>机械臂状态</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/feedback/leader_joint_angles</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>主导臂关节角度</td>
+<td>主导臂模式</td>
+</tr>
+<tr>
+<td><code>/feedback/gripper_status</code></td>
+<td><code>agx_arm_msgs/GripperStatus</code></td>
+<td>夹爪状态</td>
+<td>配置 AgxGripper</td>
+</tr>
+<tr>
+<td><code>/feedback/hand_status</code></td>
+<td><code>agx_arm_msgs/HandStatus</code></td>
+<td>灵巧手状态</td>
+<td>配置 Revo2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feedbackjoint_states"><code>/feedback/joint_states</code> 详细说明<a class="headerlink" href="#feedbackjoint_states" title="Permanent link">&para;</a></h4>
+<p>该话题包含机械臂和末端执行器的组合关节状态：</p>
+<p><strong>机械臂关节</strong> (<code>joint1</code> ~ <code>joint*</code>)</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>position</code></td>
+<td>关节角度 (rad)</td>
+</tr>
+<tr>
+<td><code>velocity</code></td>
+<td>关节速度 (rad/s)</td>
+</tr>
+<tr>
+<td><code>effort</code></td>
+<td>关节力矩 (Nm)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>夹爪关节</strong> （需配置 <code>effector_type=agx_gripper</code>）</p>
+<p>默认发布 <code>gripper</code>、<code>gripper_joint1</code>、<code>gripper_joint2</code> 三个关节；若 <code>publish_gripper_joint</code> 设为 <code>false</code>，仅发布 <code>gripper_joint1</code> 和 <code>gripper_joint2</code>（URDF 中的关节名，适配 MoveIt）。</p>
+<table>
+<thead>
+<tr>
+<th>关节名</th>
+<th><code>position</code> 说明</th>
+<th><code>velocity</code></th>
+<th><code>effort</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gripper</code></td>
+<td>夹爪开口宽度 (m)，范围 [0, 0.1]</td>
+<td>0.0</td>
+<td>力 (N)</td>
+</tr>
+<tr>
+<td><code>gripper_joint1</code></td>
+<td>单侧夹片位移 = 宽度 × 0.5 (m)</td>
+<td>0.0</td>
+<td>力 (N)</td>
+</tr>
+<tr>
+<td><code>gripper_joint2</code></td>
+<td>单侧夹片位移 = 宽度 × -0.5 (m)</td>
+<td>0.0</td>
+<td>力 (N)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>灵巧手关节</strong>（需配置 <code>effector_type=revo2</code>）</p>
+<p>左手关节命名：</p>
+<ul>
+<li><code>left_thumb_metacarpal_joint</code></li>
+<li><code>left_thumb_proximal_joint</code></li>
+<li><code>left_index_proximal_joint</code></li>
+<li><code>left_middle_proximal_joint</code></li>
+<li><code>left_ring_proximal_joint</code></li>
+<li><code>left_pinky_proximal_joint</code></li>
+</ul>
+<p>右手关节命名：</p>
+<ul>
+<li><code>right_thumb_metacarpal_joint</code></li>
+<li><code>right_thumb_proximal_joint</code></li>
+<li><code>right_index_proximal_joint</code></li>
+<li><code>right_middle_proximal_joint</code></li>
+<li><code>right_ring_proximal_joint</code></li>
+<li><code>right_pinky_proximal_joint</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>position</code></td>
+<td>手指关节角度 (rad)</td>
+</tr>
+<tr>
+<td><code>velocity</code></td>
+<td>0.0</td>
+</tr>
+<tr>
+<td><code>effort</code></td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feedbackarm_status"><code>/feedback/arm_status</code> 详细说明<a class="headerlink" href="#feedbackarm_status" title="Permanent link">&para;</a></h4>
+<p>消息类型：<code>agx_arm_msgs/AgxArmStatus</code></p>
+<p><strong>消息字段说明：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctrl_mode</code></td>
+<td><code>uint8</code></td>
+<td>控制模式，见下表</td>
+</tr>
+<tr>
+<td><code>arm_status</code></td>
+<td><code>uint8</code></td>
+<td>机械臂状态，见下表</td>
+</tr>
+<tr>
+<td><code>mode_feedback</code></td>
+<td><code>uint8</code></td>
+<td>模式反馈，见下表</td>
+</tr>
+<tr>
+<td><code>teach_status</code></td>
+<td><code>uint8</code></td>
+<td>示教状态，见下表</td>
+</tr>
+<tr>
+<td><code>motion_status</code></td>
+<td><code>uint8</code></td>
+<td>运动状态：0=已到达目标位置，1=未到达目标位置</td>
+</tr>
+<tr>
+<td><code>trajectory_num</code></td>
+<td><code>uint8</code></td>
+<td>当前轨迹点序号（0~255，离线轨迹模式下反馈）</td>
+</tr>
+<tr>
+<td><code>err_status</code></td>
+<td><code>int64</code></td>
+<td>错误状态码</td>
+</tr>
+<tr>
+<td><code>joint_1_angle_limit</code> ~ <code>joint_7_angle_limit</code></td>
+<td><code>bool</code></td>
+<td>关节1~7角度超限（true=异常，false=正常）</td>
+</tr>
+<tr>
+<td><code>communication_status_joint_1</code> ~ <code>communication_status_joint_7</code></td>
+<td><code>bool</code></td>
+<td>关节1~7通信状态（true=异常，false=正常）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>控制模式 (<code>ctrl_mode</code>)：</strong></p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>待机</td>
+</tr>
+<tr>
+<td>1</td>
+<td>CAN指令控制</td>
+</tr>
+<tr>
+<td>2</td>
+<td>示教模式</td>
+</tr>
+<tr>
+<td>3</td>
+<td>以太网控制</td>
+</tr>
+<tr>
+<td>4</td>
+<td>WiFi控制</td>
+</tr>
+<tr>
+<td>5</td>
+<td>遥控模式</td>
+</tr>
+<tr>
+<td>6</td>
+<td>联动示教输入</td>
+</tr>
+<tr>
+<td>7</td>
+<td>离线轨迹模式</td>
+</tr>
+<tr>
+<td>8</td>
+<td>TCP控制</td>
+</tr>
+</tbody>
+</table>
+<p><strong>机械臂状态 (<code>arm_status</code>)：</strong></p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>正常</td>
+</tr>
+<tr>
+<td>1</td>
+<td>急停</td>
+</tr>
+<tr>
+<td>2</td>
+<td>无解</td>
+</tr>
+<tr>
+<td>3</td>
+<td>奇异点</td>
+</tr>
+<tr>
+<td>4</td>
+<td>目标角度超限</td>
+</tr>
+<tr>
+<td>5</td>
+<td>关节通信异常</td>
+</tr>
+<tr>
+<td>6</td>
+<td>关节刹车未释放</td>
+</tr>
+<tr>
+<td>7</td>
+<td>发生碰撞</td>
+</tr>
+<tr>
+<td>8</td>
+<td>示教拖动超速</td>
+</tr>
+<tr>
+<td>9</td>
+<td>关节状态异常</td>
+</tr>
+<tr>
+<td>10</td>
+<td>其他异常</td>
+</tr>
+<tr>
+<td>11</td>
+<td>示教记录中</td>
+</tr>
+<tr>
+<td>12</td>
+<td>示教执行中</td>
+</tr>
+<tr>
+<td>13</td>
+<td>示教暂停</td>
+</tr>
+<tr>
+<td>14</td>
+<td>主控NTC过温</td>
+</tr>
+<tr>
+<td>15</td>
+<td>释放电阻NTC过温</td>
+</tr>
+</tbody>
+</table>
+<p><strong>模式反馈 (<code>mode_feedback</code>)：</strong></p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>MOVE P</td>
+</tr>
+<tr>
+<td>1</td>
+<td>MOVE J</td>
+</tr>
+<tr>
+<td>2</td>
+<td>MOVE L</td>
+</tr>
+<tr>
+<td>3</td>
+<td>MOVE C</td>
+</tr>
+<tr>
+<td>4</td>
+<td>MOVE MIT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>MOVE CPV</td>
+</tr>
+</tbody>
+</table>
+<p><strong>示教状态 (<code>teach_status</code>)：</strong></p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>关闭</td>
+</tr>
+<tr>
+<td>1</td>
+<td>开始示教记录（进入拖动示教）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>结束示教记录（退出拖动示教）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>执行示教轨迹</td>
+</tr>
+<tr>
+<td>4</td>
+<td>暂停执行</td>
+</tr>
+<tr>
+<td>5</td>
+<td>继续执行</td>
+</tr>
+<tr>
+<td>6</td>
+<td>终止执行</td>
+</tr>
+<tr>
+<td>7</td>
+<td>移动至轨迹起点</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feedbackgripper_status"><code>/feedback/gripper_status</code> 详细说明<a class="headerlink" href="#feedbackgripper_status" title="Permanent link">&para;</a></h4>
+<p>消息类型：<code>agx_arm_msgs/GripperStatus</code></p>
+<p><strong>消息字段说明：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>header</code></td>
+<td><code>std_msgs/Header</code></td>
+<td>消息头</td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td><code>float64</code></td>
+<td>当前夹爪开口宽度（单位：米）</td>
+</tr>
+<tr>
+<td><code>force</code></td>
+<td><code>float64</code></td>
+<td>当前夹持力（单位：牛顿）</td>
+</tr>
+<tr>
+<td><code>voltage_too_low</code></td>
+<td><code>bool</code></td>
+<td>电压过低（true=异常，false=正常）</td>
+</tr>
+<tr>
+<td><code>motor_overheating</code></td>
+<td><code>bool</code></td>
+<td>电机过热（true=异常，false=正常）</td>
+</tr>
+<tr>
+<td><code>driver_overcurrent</code></td>
+<td><code>bool</code></td>
+<td>驱动器过流（true=异常，false=正常）</td>
+</tr>
+<tr>
+<td><code>driver_overheating</code></td>
+<td><code>bool</code></td>
+<td>驱动器过热（true=异常，false=正常）</td>
+</tr>
+<tr>
+<td><code>sensor_status</code></td>
+<td><code>bool</code></td>
+<td>传感器状态（true=异常，false=正常）</td>
+</tr>
+<tr>
+<td><code>driver_error_status</code></td>
+<td><code>bool</code></td>
+<td>驱动器错误状态（true=异常，false=正常）</td>
+</tr>
+<tr>
+<td><code>driver_enable_status</code></td>
+<td><code>bool</code></td>
+<td>驱动器使能状态（true=已使能，false=未使能）</td>
+</tr>
+<tr>
+<td><code>homing_status</code></td>
+<td><code>bool</code></td>
+<td>回零/归零状态（true=已完成，false=未完成）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feedbackhand_status"><code>/feedback/hand_status</code> 详细说明<a class="headerlink" href="#feedbackhand_status" title="Permanent link">&para;</a></h4>
+<p>消息类型：<code>agx_arm_msgs/HandStatus</code></p>
+<p><strong>消息字段说明：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>header</code></td>
+<td><code>std_msgs/Header</code></td>
+<td>消息头</td>
+</tr>
+<tr>
+<td><code>left_or_right</code></td>
+<td><code>uint8</code></td>
+<td>手部类型标识：1=左手，2=右手</td>
+</tr>
+</tbody>
+</table>
+<p><strong>手指位置字段（范围：[0, 100]，0=完全张开，100=完全弯曲）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thumb_tip_pos</code></td>
+<td><code>uint8</code></td>
+<td>拇指指尖位置</td>
+</tr>
+<tr>
+<td><code>thumb_base_pos</code></td>
+<td><code>uint8</code></td>
+<td>拇指指根位置</td>
+</tr>
+<tr>
+<td><code>index_finger_pos</code></td>
+<td><code>uint8</code></td>
+<td>食指位置</td>
+</tr>
+<tr>
+<td><code>middle_finger_pos</code></td>
+<td><code>uint8</code></td>
+<td>中指位置</td>
+</tr>
+<tr>
+<td><code>ring_finger_pos</code></td>
+<td><code>uint8</code></td>
+<td>无名指位置</td>
+</tr>
+<tr>
+<td><code>pinky_finger_pos</code></td>
+<td><code>uint8</code></td>
+<td>小指位置</td>
+</tr>
+</tbody>
+</table>
+<p><strong>手指电机状态字段（0=空闲，1=运行中，2=堵转/卡死）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thumb_tip_status</code></td>
+<td><code>uint8</code></td>
+<td>拇指指尖电机状态</td>
+</tr>
+<tr>
+<td><code>thumb_base_status</code></td>
+<td><code>uint8</code></td>
+<td>拇指指根电机状态</td>
+</tr>
+<tr>
+<td><code>index_finger_status</code></td>
+<td><code>uint8</code></td>
+<td>食指电机状态</td>
+</tr>
+<tr>
+<td><code>middle_finger_status</code></td>
+<td><code>uint8</code></td>
+<td>中指电机状态</td>
+</tr>
+<tr>
+<td><code>ring_finger_status</code></td>
+<td><code>uint8</code></td>
+<td>无名指电机状态</td>
+</tr>
+<tr>
+<td><code>pinky_finger_status</code></td>
+<td><code>uint8</code></td>
+<td>小指电机状态</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_11">控制话题<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>话题</th>
+<th>消息类型</th>
+<th>说明</th>
+<th>适用条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/control/joint_states</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>关节控制（含末端执行器）</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/control/move_j</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>关节控制运动</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/control/move_p</code></td>
+<td><code>geometry_msgs/PoseStamped</code></td>
+<td>点到点运动</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/control/move_l</code></td>
+<td><code>geometry_msgs/PoseStamped</code></td>
+<td>直线运动</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/control/move_c</code></td>
+<td><code>geometry_msgs/PoseArray</code></td>
+<td>圆弧运动</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/control/move_js</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>MIT 模式关节运动</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/control/move_mit</code></td>
+<td><code>agx_arm_msgs/MoveMITMsg</code></td>
+<td>MIT 力矩控制</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/control/hand</code></td>
+<td><code>agx_arm_msgs/HandCmd</code></td>
+<td>灵巧手控制</td>
+<td>配置 Revo2</td>
+</tr>
+<tr>
+<td><code>/control/hand_position_time</code></td>
+<td><code>agx_arm_msgs/HandPositionTimeCmd</code></td>
+<td>灵巧手位置时间控制</td>
+<td>配置 Revo2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="controljoint_states"><code>/control/joint_states</code> 详细说明<a class="headerlink" href="#controljoint_states" title="Permanent link">&para;</a></h4>
+<p>该话题使用 <code>sensor_msgs/JointState</code> 消息类型，支持同时控制机械臂关节和末端执行器（夹爪/灵巧手）。只需发送要控制的关节即可，未包含的关节不受影响。</p>
+<p><strong>消息字段说明：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>关节名称列表</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td>对应关节的目标位置</td>
+</tr>
+<tr>
+<td><code>velocity</code></td>
+<td>未使用（可留空）</td>
+</tr>
+<tr>
+<td><code>effort</code></td>
+<td>用于夹爪力控制（仅对 <code>gripper</code> 关节有效）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>通过 <code>/control/joint_states</code> 控制夹爪</strong>（需配置 <code>effector_type=agx_gripper</code>）</p>
+<p>在 <code>name</code> 中包含 <code>gripper</code>，通过 <code>position</code> 设置目标宽度，通过 <code>effort</code> 设置夹持力。</p>
+<table>
+<thead>
+<tr>
+<th>关节名</th>
+<th>position（宽度）</th>
+<th>effort（力）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gripper</code></td>
+<td>目标宽度 (m)，范围: [0.0, 0.1]</td>
+<td>目标力 (N)，范围: [0.5, 3.0]，默认: 1.0</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意：</strong> 当 <code>effort</code> 为 0 或未指定时，使用默认力 1.0N。</p>
+</blockquote>
+<p>示例：控制夹爪宽度 0.05m、力 1.5N
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a><span class="w">  </span><span class="s2">&quot;{name: [gripper], position: [0.05], velocity: [], effort: [1.5]}&quot;</span><span class="w"> </span>-1
+</span></code></pre></div></p>
+<p><strong>通过 <code>/control/joint_states</code> 控制灵巧手</strong>（需配置 <code>effector_type=revo2</code>）</p>
+<p>在 <code>name</code> 中包含灵巧手关节名，通过 <code>position</code> 设置目标位置（position 模式, 单位: rad）。仅需发送要控制的关节，未包含的关节将保持当前位置。</p>
+<p>示例：仅控制左手食指到位置 0.5rad
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/control/joint_states<span class="w"> </span>sensor_msgs/msg/JointState<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="w">  </span><span class="s2">&quot;{name: [left_index_proximal_joint], position: [0.5], velocity: [], effort: []}&quot;</span><span class="w"> </span>-1
+</span></code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>关节名</th>
+<th>说明</th>
+<th>position 范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>left_thumb_metacarpal_joint</code> / <code>right_thumb_metacarpal_joint</code></td>
+<td>大拇指指根</td>
+<td>[0, 1.57]</td>
+</tr>
+<tr>
+<td><code>left_thumb_proximal_joint</code> / <code>right_thumb_proximal_joint</code></td>
+<td>大拇指指尖</td>
+<td>[0, 1.03]</td>
+</tr>
+<tr>
+<td><code>left_index_proximal_joint</code> / <code>right_index_proximal_joint</code></td>
+<td>食指</td>
+<td>[0, 1.41]</td>
+</tr>
+<tr>
+<td><code>left_middle_proximal_joint</code> / <code>right_middle_proximal_joint</code></td>
+<td>中指</td>
+<td>[0, 1.41]</td>
+</tr>
+<tr>
+<td><code>left_ring_proximal_joint</code> / <code>right_ring_proximal_joint</code></td>
+<td>无名指</td>
+<td>[0, 1.41]</td>
+</tr>
+<tr>
+<td><code>left_pinky_proximal_joint</code> / <code>right_pinky_proximal_joint</code></td>
+<td>小指</td>
+<td>[0, 1.41]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="controlmove_mit"><code>/control/move_mit</code> 详细说明<a class="headerlink" href="#controlmove_mit" title="Permanent link">&para;</a></h4>
+<p>消息类型：<code>agx_arm_msgs/MoveMITMsg</code></p>
+<p><strong>消息字段说明：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>joint_index</code></td>
+<td><code>int32[]</code></td>
+<td>要控制的关节索引数组</td>
+</tr>
+<tr>
+<td><code>p_des</code></td>
+<td><code>float64[]</code></td>
+<td>期望关节位置数组（单位：弧度）</td>
+</tr>
+<tr>
+<td><code>v_des</code></td>
+<td><code>float64[]</code></td>
+<td>期望关节速度数组（单位：弧度/秒）</td>
+</tr>
+<tr>
+<td><code>kp</code></td>
+<td><code>float64[]</code></td>
+<td>位置增益数组</td>
+</tr>
+<tr>
+<td><code>kd</code></td>
+<td><code>float64[]</code></td>
+<td>速度增益数组</td>
+</tr>
+<tr>
+<td><code>torque</code></td>
+<td><code>float64[]</code></td>
+<td>期望关节力矩数组（单位：牛·米，N·m）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意：</strong> 所有数组字段长度需与 <code>joint_index</code> 一致，支持同时控制多个关节。</p>
+</blockquote>
+<h4 id="controlhand"><code>/control/hand</code> 详细说明<a class="headerlink" href="#controlhand" title="Permanent link">&para;</a></h4>
+<p>消息类型：<code>agx_arm_msgs/HandCmd</code></p>
+<p><strong>消息字段说明：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td>控制模式：<code>position</code>（位置）/ <code>speed</code>（速度）/ <code>current</code>（电流）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>各手指目标值字段：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thumb_tip</code></td>
+<td><code>int8</code></td>
+<td>拇指指尖目标值</td>
+</tr>
+<tr>
+<td><code>thumb_base</code></td>
+<td><code>int8</code></td>
+<td>拇指指根目标值</td>
+</tr>
+<tr>
+<td><code>index_finger</code></td>
+<td><code>int8</code></td>
+<td>食指目标值</td>
+</tr>
+<tr>
+<td><code>middle_finger</code></td>
+<td><code>int8</code></td>
+<td>中指目标值</td>
+</tr>
+<tr>
+<td><code>ring_finger</code></td>
+<td><code>int8</code></td>
+<td>无名指目标值</td>
+</tr>
+<tr>
+<td><code>pinky_finger</code></td>
+<td><code>int8</code></td>
+<td>小指目标值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>不同模式下的数值范围：</strong></p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>数值范围</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>position</code></td>
+<td>[0, 100]</td>
+<td>0=完全张开，100=完全弯曲</td>
+</tr>
+<tr>
+<td><code>speed</code></td>
+<td>[-100, 100]</td>
+<td>负值=张开方向，正值=弯曲方向</td>
+</tr>
+<tr>
+<td><code>current</code></td>
+<td>[-100, 100]</td>
+<td>负值=张开方向，正值=弯曲方向</td>
+</tr>
+</tbody>
+</table>
+<h4 id="controlhand_position_time"><code>/control/hand_position_time</code> 详细说明<a class="headerlink" href="#controlhand_position_time" title="Permanent link">&para;</a></h4>
+<p>消息类型：<code>agx_arm_msgs/HandPositionTimeCmd</code></p>
+<p><strong>消息字段说明：</strong></p>
+<p><strong>各手指目标位置字段（范围：[0, 100]，0=完全张开，100=完全弯曲）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thumb_tip_pos</code></td>
+<td><code>int8</code></td>
+<td>拇指指尖位置</td>
+</tr>
+<tr>
+<td><code>thumb_base_pos</code></td>
+<td><code>int8</code></td>
+<td>拇指指根位置</td>
+</tr>
+<tr>
+<td><code>index_finger_pos</code></td>
+<td><code>int8</code></td>
+<td>食指位置</td>
+</tr>
+<tr>
+<td><code>middle_finger_pos</code></td>
+<td><code>int8</code></td>
+<td>中指位置</td>
+</tr>
+<tr>
+<td><code>ring_finger_pos</code></td>
+<td><code>int8</code></td>
+<td>无名指位置</td>
+</tr>
+<tr>
+<td><code>pinky_finger_pos</code></td>
+<td><code>int8</code></td>
+<td>小指位置</td>
+</tr>
+</tbody>
+</table>
+<p><strong>各手指到达时间字段（单位：10毫秒，范围：[0, 255]，例如：200 = 2秒）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thumb_tip_time</code></td>
+<td><code>uint8</code></td>
+<td>拇指指尖到达时间</td>
+</tr>
+<tr>
+<td><code>thumb_base_time</code></td>
+<td><code>uint8</code></td>
+<td>拇指指根到达时间</td>
+</tr>
+<tr>
+<td><code>index_finger_time</code></td>
+<td><code>uint8</code></td>
+<td>食指到达时间</td>
+</tr>
+<tr>
+<td><code>middle_finger_time</code></td>
+<td><code>uint8</code></td>
+<td>中指到达时间</td>
+</tr>
+<tr>
+<td><code>ring_finger_time</code></td>
+<td><code>uint8</code></td>
+<td>无名指到达时间</td>
+</tr>
+<tr>
+<td><code>pinky_finger_time</code></td>
+<td><code>uint8</code></td>
+<td>小指到达时间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_12">服务<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>类型</th>
+<th>说明</th>
+<th>适用条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/enable_agx_arm</code></td>
+<td><code>std_srvs/SetBool</code></td>
+<td>使能/失能机械臂</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/move_home</code></td>
+<td><code>std_srvs/Empty</code></td>
+<td>回零位</td>
+<td>始终可用</td>
+</tr>
+<tr>
+<td><code>/exit_teach_mode</code></td>
+<td><code>std_srvs/Empty</code></td>
+<td>退出示教模式</td>
+<td>Piper 系列</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_13">参数限制<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<h3 id="gripper_1">夹爪 (Gripper)<a class="headerlink" href="#gripper_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>范围</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width (宽度)</td>
+<td>[0.0, 0.1] m</td>
+<td>-</td>
+<td>目标开合宽度</td>
+</tr>
+<tr>
+<td>force (力)</td>
+<td>[0.5, 3.0] N</td>
+<td>1.0</td>
+<td>夹持力度</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ 超出范围的值将被拒绝（不执行），节点输出警告日志。例如：发送 force=5.0 时，该指令不会执行，并输出 <code>force must be in range [0.5, 3.0], current value: 5.0</code> 警告。</p>
+</blockquote>
+<h3 id="revo2">灵巧手 (Revo2)<a class="headerlink" href="#revo2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>范围</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>position (位置)</td>
+<td>[0, 100]</td>
+<td>手指目标位置，0 为完全张开，100 为完全握紧</td>
+</tr>
+<tr>
+<td>speed (速度)</td>
+<td>[-100, 100]</td>
+<td>手指运动速度</td>
+</tr>
+<tr>
+<td>current (电流)</td>
+<td>[-100, 100]</td>
+<td>手指驱动电流</td>
+</tr>
+<tr>
+<td>time (时间)</td>
+<td>[0, 255]</td>
+<td>到达目标位置的时间（单位: 10ms，例如 100 = 1 秒）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ 超出范围的值将被拒绝（不执行），节点输出警告日志。例如：发送 position=120 时，该指令不会执行，并输出 <code>position must be in range [0, 100], current value: 120</code> 警告。</p>
+</blockquote>
+<hr />
+<h2 id="_14">注意事项<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<h3 id="can_1">CAN 通信<a class="headerlink" href="#can_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>使用前<strong>必须先激活 CAN 模块</strong></li>
+<li>波特率：<strong>1000000 bps</strong></li>
+<li>若出现 <code>SendCanMessage failed</code> 错误，请检查 CAN 连接</li>
+</ul>
+<h3 id="_15">⚠️ 安全警告<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>保持安全距离</strong>：机械臂运动时，请勿进入其工作空间，以免造成伤害</li>
+<li><strong>奇异点风险</strong>：靠近运动学奇异点时，关节可能发生突然大幅运动</li>
+<li><strong>MIT 模式危险</strong>：高速响应的 MIT 模式极具危险性，请谨慎使用</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tcp_offset/TCP_OFFSET/" class="md-footer__link md-footer__link--prev" aria-label="Previous: TCP Offset">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                TCP Offset
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../README_EN/" class="md-footer__link md-footer__link--next" aria-label="Next: README (EN)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                README (EN)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 The authors
+
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["announce.dismiss","content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight"],"search":"../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.91a19a9e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,38 @@
+# ─── MoveIt / Robot Configuration ────────────────────────────────────────────
+# Robot frame IDs, planner settings, constraint tolerances, gripper params.
+# These rarely change — only touch when reconfiguring the arm setup.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# ─── Robot / MoveIt frames ───────────────────────────────────────────────────
+robot:
+  planning_group: arm
+  eef_link:       tcp_link
+  base_frame:     base_link
+
+
+# ─── MoveIt planner settings ─────────────────────────────────────────────────
+planner:
+  num_planning_attempts:           3       # retries with new random seed on timeout
+  allowed_planning_time:           5.0     # seconds per attempt
+  max_velocity_scaling_factor:     0.6
+  max_acceleration_scaling_factor: 0.5
+  workspace:                               # TCP bounding box in base_link frame (metres)
+    min: [ 0.10, -0.20, 0.10]             # covers all slot poses + hover headroom
+    max: [ 0.55,  0.25, 0.40]             # x:arm reach, y:side reach, z:hover height
+
+
+# ─── Constraint tolerances ───────────────────────────────────────────────────
+# Too tight → error_code=99999. Keep orientation_tolerance ≥ 0.03.
+constraints:
+  position_tolerance:    0.001   # metres
+  orientation_tolerance: 0.003   # radians per axis
+
+
+# ─── Gripper ─────────────────────────────────────────────────────────────────
+gripper:
+  joint:        gripper
+  open_width:   0.03      # metres
+  close_width:  0.018     # metres
+  effort:       1.0       # Newtons
+  move_time:    0.5       # seconds to wait after commanding gripper

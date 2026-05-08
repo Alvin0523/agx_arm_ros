@@ -1,20 +1,14 @@
 #!/usr/bin/env python3
 """
-Pick & place using the /move_action action client.
-Talks to the already-running move_group (pixi run piper_moveit).
+pick_place.py — utility module.
 
-Terminals:
-  1: pixi run can
-  2: pixi run piper_moveit
-  3: python3 pick_place.py [--config config.yaml] [--sequence chess_loop]
+Provides PickPlaceNode (MoveIt motion + gripper) and config helpers.
+Imported by main.py — not run directly.
 
-All tunable parameters (poses, offsets, gripper widths, planner settings,
-sequence steps) live in config.yaml — edit that file, not this one.
+All tunable parameters live in config.yaml — edit that, not this file.
 """
 
-import argparse
 import time
-import threading
 
 import rclpy
 import yaml
@@ -40,9 +34,13 @@ from builtin_interfaces.msg import Duration
 
 # ─── Config loading ───────────────────────────────────────────────────────────
 
-def load_config(path: str) -> dict:
-    with open(path) as fh:
-        return yaml.safe_load(fh)
+def load_config(*paths: str) -> dict:
+    """Load and merge one or more YAML config files into a single dict."""
+    merged = {}
+    for path in paths:
+        with open(path) as fh:
+            merged.update(yaml.safe_load(fh))
+    return merged
 
 
 def get_offset(cfg: dict, name: str) -> dict:
@@ -192,7 +190,9 @@ class PickPlaceNode(Node):
     def go(self, pos: dict,
            x_override=None,
            y_override=None,
-           z_override=None) -> bool:
+           z_override=None,
+           pos_tol=None,
+           ori_tol=None) -> bool:
         x = x_override if x_override is not None else pos["x"]
         y = y_override if y_override is not None else pos["y"]
         z = z_override if z_override is not None else pos["z"]
@@ -203,8 +203,8 @@ class PickPlaceNode(Node):
                 pose,
                 base_frame=self._robot["base_frame"],
                 eef_link=self._robot["eef_link"],
-                pos_tol=self._cons["position_tolerance"],
-                ori_tol=self._cons["orientation_tolerance"],
+                pos_tol=pos_tol if pos_tol is not None else self._cons["position_tolerance"],
+                ori_tol=ori_tol if ori_tol is not None else self._cons["orientation_tolerance"],
             )
         )
 
@@ -259,85 +259,3 @@ class PickPlaceNode(Node):
         log("=== done ===")
 
 
-# ─── Sequence runner ─────────────────────────────────────────────────────────
-
-def _run_steps(robot: PickPlaceNode, cfg: dict, steps: list):
-    """Execute one pass through all steps in the list."""
-    poses = cfg["poses"]
-    for step in steps:
-        if step["type"] == "home":
-            robot.go_home()
-
-        elif step["type"] == "pick_place":
-            pick_pose   = poses[step["pick"]]
-            place_pose  = poses[step["place"]]
-            pick_off    = get_offset(cfg, step["pick_offset"])
-            place_off   = get_offset(cfg, step["place_offset"])
-            robot.pick_and_place(pick_pose, place_pose, pick_off, place_off)
-
-        else:
-            robot.get_logger().warn(f"Unknown step type: {step['type']!r}")
-
-
-def run_sequence(robot: PickPlaceNode, cfg: dict, sequence_name: str):
-    seq   = cfg["sequences"][sequence_name]
-    steps = seq["steps"]
-    loop  = seq.get("loop", False)
-
-    print(f"\nSequence '{sequence_name}' — {len(steps)} step(s), "
-          f"loop={'yes' if loop else 'no'}.")
-
-    if loop:
-        input("Press ENTER to start... ")
-        stop_flag = threading.Event()
-
-        def _wait_for_stop():
-            input("Press ENTER to stop...\n")
-            stop_flag.set()
-
-        t = threading.Thread(target=_wait_for_stop, daemon=True)
-        t.start()
-
-        try:
-            while not stop_flag.is_set():
-                _run_steps(robot, cfg, steps)
-        except KeyboardInterrupt:
-            print("\nStopped.")
-
-        print("\nLoop ended.")
-
-    else:
-        input("Press ENTER to run once... ")
-        try:
-            _run_steps(robot, cfg, steps)
-        except KeyboardInterrupt:
-            print("\nStopped.")
-        print("\nDone.")
-
-
-# ─── Entry point ─────────────────────────────────────────────────────────────
-
-def main():
-    parser = argparse.ArgumentParser(description="Pick & place runner")
-    parser.add_argument("--config",   default="config.yaml",
-                        help="Path to YAML config (default: config.yaml)")
-    parser.add_argument("--sequence", default="chess_loop",
-                        help="Sequence name from config (default: chess_loop)")
-    args = parser.parse_args()
-
-    cfg = load_config(args.config)
-
-    rclpy.init()
-    robot = PickPlaceNode(cfg)
-
-    print("\n[READY] Stand clear.")
-    input("Press ENTER to go HOME... ")
-    robot.go_home()
-
-    run_sequence(robot, cfg, args.sequence)
-
-    rclpy.shutdown()
-
-
-if __name__ == "__main__":
-    main()

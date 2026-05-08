@@ -1,0 +1,59 @@
+# ─── Gesture / Interrupt Configuration ───────────────────────────────────────
+# Triggered when /detector = True after a pick-place step completes.
+# Arm only — no gripper during gestures.
+#
+# To tune: adjust pose coordinates below and/or reorder 'interrupt.sequence'.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# ─── Constraint tolerances ───────────────────────────────────────────────────
+# Looser than chess — gestures are display movements, not precise placements.
+constraints:
+  position_tolerance:    0.01   # metres
+  orientation_tolerance: 0.1    # radians
+
+
+# ─── Gesture poses ───────────────────────────────────────────────────────────
+# Orientation: qy=0.707, qw=0.707 → TCP pointing forward (horizontal).
+# Visually distinct from pick-place (TCP pointing down, qy=1, qw=0).
+
+poses:
+
+  gesture_hover:        # neutral lift above board centre — start & end point
+    x:  0.311
+    y:  0.025
+    z:  0.280
+    qx: 0.0
+    qy: 0.707
+    qz: 0.0
+    qw: 0.707
+
+  gesture_lean_left:    # shift left — like glancing at something
+    x:  0.311
+    y:  0.120
+    z:  0.260
+    qx: 0.0
+    qy: 0.707
+    qz: 0.0
+    qw: 0.707
+
+  gesture_lean_right:   # shift right — glancing the other way
+    x:  0.311
+    y: -0.070
+    z:  0.260
+    qx: 0.0
+    qy: 0.707
+    qz: 0.0
+    qw: 0.707
+
+
+# ─── Interrupt sequence ───────────────────────────────────────────────────────
+# Add/remove/reorder pose names to change the gesture motion.
+
+interrupt:
+  sequence:
+    - gesture_hover       # lift above board
+    - gesture_lean_left   # look left
+    - gesture_hover       # back to centre
+    - gesture_lean_right  # look right
+    - gesture_hover       # back to centre before resuming chess
