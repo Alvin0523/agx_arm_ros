@@ -11,18 +11,18 @@
 # The site_name is shown in the page header and the browser window title
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_name
-site_name = "Piper Arm Moveit2"
+site_name = "Documentation"
 
 # The site_description is included in the HTML head and should contain a
 # meaningful description of the site content for use by search engines.
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_description
-site_description = "Moveit gudie using piper_arm"
+site_description = "A new project generated from the default template project."
 
 # The site_author attribute. This is used in the HTML head element.
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_author
-site_author = "Wong Wei Ming"
+site_author = "<your name here>"
 
 # The site_url is the canonical URL for your site. When building online
 # documentation you should set this.
@@ -44,20 +44,10 @@ Copyright &copy; 2026 The authors
 # can be defined using TOML syntax.
 #
 # Read more: https://zensical.org/docs/setup/navigation/
-nav = [
-  { "Index" = "index.md" },
-  { "Quick Start" = "quick-start.md" },
-  { "Operation" = "operation.md" },
-  { "Teaching Positions" = "teaching.md" },
-  { "Sensor Setup" = "sensor.md" },
-  { "Tuning" = "tuning.md" },
-  { "CAN Setup (EN)" = "CAN_USER_EN.md" },
-  { "CAN Setup (中文)" = "CAN_USER.md" },
-  { "Q&A" = "Q&A.md" },
-  { "TCP Offset" = "tcp_offset/TCP_OFFSET.md" },
-  { "README (中文)" = "README_CN.md" },
-  { "README (EN)" = "README_EN.md" },
-]
+# nav = [
+#   { "Get started" = "index.md" },
+#   { "Markdown in 5min" = "markdown.md" },
+# ]
 
 # With the "extra_css" option you can add your own CSS styling to customize
 # your Zensical project according to your needs. You can add any number of
