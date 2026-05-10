@@ -47,12 +47,25 @@ acceptance bubble. Too tight → `error_code=99999`. Too loose → imprecise pla
 constraints:
   position_tolerance:    0.005   # metres — start here, tighten toward 0.002 once stable
   orientation_tolerance: 0.05    # radians — don't go below 0.03 or IK sampling breaks
+  hover_position_tolerance:    0.05  # metres — looser for hover moves only
+  hover_orientation_tolerance: 0.05  # radians — looser for hover moves only
 ```
 
 **Tighten `position_tolerance` gradually** (0.005 → 0.003 → 0.002) only after
 zero planning failures.  
 Keep `orientation_tolerance` ≥ 0.03 — the arm's IK solver needs slack,
 especially at far reaches.
+
+### Hover vs settle (why planning sometimes fails)
+
+Hover moves are intentionally less precise, so they can use looser tolerances
+to avoid sampling failures. Final settle moves (pick/place) still use the tight
+`position_tolerance` / `orientation_tolerance` values.
+
+- If you see `Unable to sample any valid states for goal tree`, first loosen
+  hover tolerances (e.g. 0.05/0.05) before loosening the final tolerances.
+- Only tighten final tolerances after the sequence runs without any planning
+  failures.
 
 ---
 

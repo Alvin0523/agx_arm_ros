@@ -1,7 +1,7 @@
 [workspace]
 name = "agx_arm_ros"
 channels = ["https://prefix.dev/robostack-humble", "https://prefix.dev/conda-forge"]
-platforms = ["linux-aarch64"]
+platforms = ["linux-aarch64","linux-64"]
 
 [dependencies]
 # Base ROS dependencies

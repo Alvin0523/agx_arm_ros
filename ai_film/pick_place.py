@@ -238,6 +238,8 @@ class PickPlaceNode(Node):
         log("=== pick & place start ===")
 
         g = self._gripper_cfg
+        h_pos_tol = self._cons.get("hover_position_tolerance", self._cons["position_tolerance"])
+        h_ori_tol = self._cons.get("hover_orientation_tolerance", self._cons["orientation_tolerance"])
 
         pick_hover  = (pick["x"]  + pick_offset["x_offset"],
                        pick["y"]  + pick_offset["y_offset"],
@@ -247,14 +249,14 @@ class PickPlaceNode(Node):
                        place["z"] + place_offset["z_offset"])
 
         self.gripper_set(g["open_width"])
-        self.go(pick,  *pick_hover)
+        self.go(pick,  *pick_hover, pos_tol=h_pos_tol, ori_tol=h_ori_tol)
         self.go(pick)
         self.gripper_set(g["close_width"])
-        self.go(pick,  *pick_hover)
-        self.go(place, *place_hover)
+        self.go(pick,  *pick_hover, pos_tol=h_pos_tol, ori_tol=h_ori_tol)
+        self.go(place, *place_hover, pos_tol=h_pos_tol, ori_tol=h_ori_tol)
         self.go(place)
         self.gripper_set(g["open_width"])
-        self.go(place, *place_hover)
+        self.go(place, *place_hover, pos_tol=h_pos_tol, ori_tol=h_ori_tol)
 
         log("=== done ===")
 

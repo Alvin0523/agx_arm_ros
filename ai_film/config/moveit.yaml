@@ -27,6 +27,8 @@ planner:
 constraints:
   position_tolerance:    0.001   # metres
   orientation_tolerance: 0.003   # radians per axis
+  hover_position_tolerance:    0.005
+  hover_orientation_tolerance: 0.05
 
 
 # ─── Gripper ─────────────────────────────────────────────────────────────────

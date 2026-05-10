@@ -433,6 +433,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="2. Constraint tolerances">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hover-vs-settle-why-planning-sometimes-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hover vs settle (why planning sometimes fails)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -687,6 +704,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="2. Constraint tolerances">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hover-vs-settle-why-planning-sometimes-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hover vs settle (why planning sometimes fails)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -766,11 +800,23 @@ acceptance bubble. Too tight → <code>error_code=99999</code>. Too loose → im
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">constraints</span><span class="p">:</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">position_tolerance</span><span class="p">:</span><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">0.005</span><span class="w">   </span><span class="c1"># metres — start here, tighten toward 0.002 once stable</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">orientation_tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w">    </span><span class="c1"># radians — don&#39;t go below 0.03 or IK sampling breaks</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">hover_position_tolerance</span><span class="p">:</span><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w">  </span><span class="c1"># metres — looser for hover moves only</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">hover_orientation_tolerance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w">  </span><span class="c1"># radians — looser for hover moves only</span>
 </span></code></pre></div>
 <p><strong>Tighten <code>position_tolerance</code> gradually</strong> (0.005 → 0.003 → 0.002) only after
 zero planning failures.<br />
 Keep <code>orientation_tolerance</code> ≥ 0.03 — the arm's IK solver needs slack,
 especially at far reaches.</p>
+<h3 id="hover-vs-settle-why-planning-sometimes-fails">Hover vs settle (why planning sometimes fails)<a class="headerlink" href="#hover-vs-settle-why-planning-sometimes-fails" title="Permanent link">&para;</a></h3>
+<p>Hover moves are intentionally less precise, so they can use looser tolerances
+to avoid sampling failures. Final settle moves (pick/place) still use the tight
+<code>position_tolerance</code> / <code>orientation_tolerance</code> values.</p>
+<ul>
+<li>If you see <code>Unable to sample any valid states for goal tree</code>, first loosen
+  hover tolerances (e.g. 0.05/0.05) before loosening the final tolerances.</li>
+<li>Only tighten final tolerances after the sequence runs without any planning
+  failures.</li>
+</ul>
 <hr />
 <h2 id="3-planning-time-attempts">3. Planning time &amp; attempts<a class="headerlink" href="#3-planning-time-attempts" title="Permanent link">&para;</a></h2>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">num_planning_attempts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w">     </span><span class="c1"># retries with a new random seed on timeout</span>
