@@ -81,7 +81,7 @@ main  = { cmd = "python3 ai_film/main.py --config ai_film/config/moveit.yaml ai_
 
 # Utils
 foxglove = {cmd = "ros2 launch foxglove_bridge foxglove_bridge_launch.xml", description = "Foxglove bridge (ws://localhost:8765)"}
-can = {cmd = "bash scripts/can_activate_can2.sh"}
+can = {cmd = "bash scripts/can2_activate.sh"}
 home = {cmd = 'ros2 service call /move_home std_srvs/srv/Empty', description = "arm going home"}
 down = {cmd = 'ros2 service call /enable_agx_arm std_srvs/srv/SetBool "{data: false}"', description = "arm down"}
 pose = {cmd = 'ros2 topic echo /feedback/tcp_pose --once', description = "get pose"}
