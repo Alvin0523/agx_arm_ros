@@ -54,6 +54,7 @@ transient clear from erasing a detection that happened mid-motion.
 """
 
 import argparse
+import random
 import threading
 
 import rclpy
@@ -71,18 +72,19 @@ from pick_place import (
 # ─── Gesture executor ────────────────────────────────────────────────────────
 
 def _run_gesture_sequence(robot: PickPlaceNode, gesture_cfg: dict):
-    """Execute the interrupt gesture sequence. Arm only — no gripper."""
-    poses    = gesture_cfg["poses"]
-    sequence = gesture_cfg["interrupt"]["sequence"]
-    cons     = gesture_cfg.get("constraints", {})
-    pos_tol  = cons.get("position_tolerance", None)
-    ori_tol  = cons.get("orientation_tolerance", None)
+    """Execute a randomly chosen gesture sequence. Arm only — no gripper."""
+    poses     = gesture_cfg["poses"]
+    seq_names = list(gesture_cfg["sequences"].keys())
+    chosen    = random.choice(seq_names)
+    cons      = gesture_cfg.get("constraints", {})
+    pos_tol   = cons.get("position_tolerance", None)
+    ori_tol   = cons.get("orientation_tolerance", None)
     log = robot.get_logger().info
 
-    log("=== gesture interrupt start ===")
-    for pose_name in sequence:
+    log(f"=== gesture interrupt start — running '{chosen}' ===")
+    for pose_name in gesture_cfg["sequences"][chosen]:
         robot.go(poses[pose_name], pos_tol=pos_tol, ori_tol=ori_tol)
-    log("=== gesture interrupt done ===")
+    log(f"=== gesture interrupt done ===")
 
 
 # ─── Detector subscriber node ────────────────────────────────────────────────
@@ -131,6 +133,19 @@ def _run_steps(robot: PickPlaceNode,
     for step in steps:
         if step["type"] == "home":
             robot.go_home()
+
+        elif step["type"] == "gesture":
+            seq_names = list(gesture_cfg["sequences"].keys())
+            chosen    = step.get("name", random.choice(seq_names))
+            g_poses   = gesture_cfg["poses"]
+            cons      = gesture_cfg.get("constraints", {})
+            pos_tol   = cons.get("position_tolerance", None)
+            ori_tol   = cons.get("orientation_tolerance", None)
+            robot.get_logger().info(f"=== gesture step: running '{chosen}' ===")
+            print(f"\n[GESTURE] Running gesture sequence: '{chosen}'\n")
+            for pose_name in gesture_cfg["sequences"][chosen]:
+                robot.go(g_poses[pose_name], pos_tol=pos_tol, ori_tol=ori_tol)
+            robot.get_logger().info(f"=== gesture step '{chosen}' done ===")
 
         elif step["type"] == "pick_place":
             pick_pose  = poses[step["pick"]]
@@ -207,12 +222,41 @@ def main():
                         default="ai_film/config/gestures.yaml",
                         help="Gesture YAML config (default: config/gestures.yaml)")
     parser.add_argument("--sequence",
-                        default="chess_loop",
-                        help="Sequence name from config (default: chess_loop)")
+                        default=None,
+                        help="Sequence name from config. If omitted, an interactive menu is shown.")
     args = parser.parse_args()
 
     cfg         = load_config(*args.config)
     gesture_cfg = load_config(args.gestures)
+
+    # ── Interactive sequence picker ───────────────────────────────────────────
+    if args.sequence is None:
+        seq_names = list(cfg["sequences"].keys())
+        print("\n" + "═" * 50)
+        print("  Select a sequence to run:")
+        print("═" * 50)
+        separator_shown = False
+        for i, name in enumerate(seq_names, 1):
+            seq   = cfg["sequences"][name]
+            label = seq.get("label", name)
+            if not separator_shown and "(test)" in label:
+                print("  " + "─" * 46)
+                separator_shown = True
+            print(f"  [{i:2d}] {label}")
+        print("═" * 50)
+        while True:
+            raw = input("  Enter number or name: ").strip()
+            if raw.isdigit():
+                idx = int(raw) - 1
+                if 0 <= idx < len(seq_names):
+                    args.sequence = seq_names[idx]
+                    break
+                print(f"  Invalid number — enter 1–{len(seq_names)}")
+            elif raw in seq_names:
+                args.sequence = raw
+                break
+            else:
+                print(f"  Unknown sequence '{raw}' — try again")
 
     rclpy.init()
     robot    = PickPlaceNode(cfg)

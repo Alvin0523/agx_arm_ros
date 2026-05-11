@@ -9,51 +9,260 @@
 # ─── Constraint tolerances ───────────────────────────────────────────────────
 # Looser than chess — gestures are display movements, not precise placements.
 constraints:
-  position_tolerance:    0.01   # metres
+  position_tolerance:    0.05   # metres
   orientation_tolerance: 0.1    # radians
 
 
 # ─── Gesture poses ───────────────────────────────────────────────────────────
 # Orientation: qy=0.707, qw=0.707 → TCP pointing forward (horizontal).
-# Visually distinct from pick-place (TCP pointing down, qy=1, qw=0).
+# Human sits at ~10-11 o'clock from the arm, ~1.5m away (forward-left direction).
+# Poses aimed toward human use positive x + positive y to face that direction.
 
 poses:
 
-  gesture_hover:        # neutral lift above board centre — start & end point
+  # Quaternion orientation key:
+  #   qy:0.707, qw:0.707           = TCP horizontal forward (standard)
+  #   qy:0.383, qw:0.924           = TCP angled up-forward 45°  (sky-ish)
+  #   qy:0.924, qw:0.383           = TCP angled down-forward 135° (bow/present)
+  #   qx:-0.5,  qy:0.5,  qz: 0.5, qw:0.5  = TCP pointing left  (9 o'clock)
+  #   qx: 0.5,  qy:0.5,  qz:-0.5, qw:0.5  = TCP pointing right (3 o'clock)
+  #   qx:-0.271,qy:0.653,qz:0.271, qw:0.653 = TCP 45° left-fwd (toward human)
+  #   qx:-0.354,qy:0.612,qz:0.354, qw:0.612 = TCP up-left combo
+
+  gesture_neutral:      # resting centre — forward horizontal, mid height
     x:  0.311
     y:  0.025
     z:  0.280
-    qx: 0.0
-    qy: 0.707
-    qz: 0.0
-    qw: 0.707
+    qx:  0.0
+    qy:  0.707
+    qz:  0.0
+    qw:  0.707
 
-  gesture_lean_left:    # shift left — like glancing at something
-    x:  0.311
+  gesture_sky_punch:    # raised high, TCP angled up — triumphant skyward stab
+    x:  0.280
+    y:  0.025
+    z:  0.435
+    qx:  0.0
+    qy:  0.383
+    qz:  0.0
+    qw:  0.924
+
+  gesture_sky_left:     # raised high toward 10-11 o'clock — up-left flourish
+    x:  0.240
+    y:  0.160
+    z:  0.430
+    qx: -0.354
+    qy:  0.612
+    qz:  0.354
+    qw:  0.612
+
+  gesture_9_oclock:     # full 9 o'clock left — TCP pointing left
+    x:  0.210
+    y:  0.290
+    z:  0.290
+    qx: -0.5
+    qy:  0.5
+    qz:  0.5
+    qw:  0.5
+
+  gesture_3_oclock:     # full 3 o'clock right — TCP pointing right
+    x:  0.210
+    y: -0.245
+    z:  0.290
+    qx:  0.5
+    qy:  0.5
+    qz: -0.5
+    qw:  0.5
+
+  gesture_toward_human: # aimed at human 10-11 o'clock — 45° left-forward
+    x:  0.380
+    y:  0.165
+    z:  0.330
+    qx: -0.271
+    qy:  0.653
+    qz:  0.271
+    qw:  0.653
+
+  gesture_left_high:    # up-left mid sweep — 10 o'clock elevated
+    x:  0.285
+    y:  0.215
+    z:  0.355
+    qx: -0.354
+    qy:  0.612
+    qz:  0.354
+    qw:  0.612
+
+  gesture_right_high:   # up-right mid sweep — 2 o'clock elevated
+    x:  0.285
+    y: -0.185
+    z:  0.355
+    qx:  0.354
+    qy:  0.612
+    qz: -0.354
+    qw:  0.612
+
+  gesture_reach_out:    # lunge straight forward — aggressive horizontal reach
+    x:  0.450
+    y:  0.025
+    z:  0.270
+    qx:  0.0
+    qy:  0.707
+    qz:  0.0
+    qw:  0.707
+
+  gesture_reach_human:  # lunge toward human — reaching out to them
+    x:  0.415
+    y:  0.155
+    z:  0.310
+    qx: -0.271
+    qy:  0.653
+    qz:  0.271
+    qw:  0.653
+
+  gesture_bow_down:     # bow forward low — presenting / dipping TCP down
+    x:  0.385
+    y:  0.025
+    z:  0.190
+    qx:  0.0
+    qy:  0.924
+    qz:  0.0
+    qw:  0.383
+
+  gesture_think_high:   # raised + pulled in, TCP angled up — pondering
+    x:  0.270
+    y:  0.075
+    z:  0.400
+    qx:  0.0
+    qy:  0.383
+    qz:  0.0
+    qw:  0.924
+
+  gesture_think_side:   # raised left, TCP swept left — gazing sideways
+    x:  0.280
     y:  0.120
-    z:  0.260
-    qx: 0.0
-    qy: 0.707
-    qz: 0.0
-    qw: 0.707
+    z:  0.375
+    qx: -0.354
+    qy:  0.612
+    qz:  0.354
+    qw:  0.612
 
-  gesture_lean_right:   # shift right — glancing the other way
-    x:  0.311
+  gesture_wonder_a:     # upper-forward-left drift, TCP angled up — gazing into distance
+    x:  0.360
+    y:  0.090
+    z:  0.360
+    qx:  0.0
+    qy:  0.383
+    qz:  0.0
+    qw:  0.924
+
+  gesture_wonder_b:     # forward-right wander, TCP right-leaning — wandering gaze
+    x:  0.400
     y: -0.070
-    z:  0.260
-    qx: 0.0
-    qy: 0.707
-    qz: 0.0
-    qw: 0.707
+    z:  0.305
+    qx:  0.354
+    qy:  0.612
+    qz: -0.354
+    qw:  0.612
+
+  gesture_wonder_c:     # back-right, TCP angled down — looking away and down
+    x:  0.285
+    y: -0.055
+    z:  0.335
+    qx:  0.0
+    qy:  0.924
+    qz:  0.0
+    qw:  0.383
 
 
-# ─── Interrupt sequence ───────────────────────────────────────────────────────
-# Add/remove/reorder pose names to change the gesture motion.
+# ─── Named gesture sequences (randomly selected by type: gesture in a sequence) ─
+# Each is a list of pose names to execute in order.
+# Add/rename/reorder freely — main.py picks one at random each time.
 
-interrupt:
-  sequence:
-    - gesture_hover       # lift above board
-    - gesture_lean_left   # look left
-    - gesture_hover       # back to centre
-    - gesture_lean_right  # look right
-    - gesture_hover       # back to centre before resuming chess
+sequences:
+
+  big_wave:             # 9→sky→3 full clock sweep — like hailing a crowd
+    - gesture_neutral
+    - gesture_9_oclock
+    - gesture_sky_punch
+    - gesture_3_oclock
+    - gesture_9_oclock
+    - gesture_neutral
+
+  beckon_human:         # point at human then lunge toward them
+    - gesture_neutral
+    - gesture_toward_human
+    - gesture_reach_human
+    - gesture_toward_human
+    - gesture_neutral
+
+  robot_thinking:       # ponder, wander, drift — gazing into the void
+    - gesture_neutral
+    - gesture_think_high
+    - gesture_wonder_a
+    - gesture_wonder_b
+    - gesture_wonder_c
+    - gesture_think_high
+    - gesture_neutral
+
+  point_sky:            # double sky-punch then acknowledge human — triumphant
+    - gesture_neutral
+    - gesture_sky_punch
+    - gesture_neutral
+    - gesture_sky_left
+    - gesture_toward_human
+    - gesture_neutral
+
+  wander:               # aimless drift — robot daydreaming, ends with a bow
+    - gesture_neutral
+    - gesture_wonder_a
+    - gesture_reach_out
+    - gesture_wonder_b
+    - gesture_wonder_c
+    - gesture_bow_down
+    - gesture_neutral
+
+  clock_sweep:          # slow 9→12→3 scan — surveying the whole room
+    - gesture_neutral
+    - gesture_9_oclock
+    - gesture_left_high
+    - gesture_sky_punch
+    - gesture_right_high
+    - gesture_3_oclock
+    - gesture_neutral
+
+  show_off:             # reach far, dip low, rise high — theatrical display
+    - gesture_neutral
+    - gesture_reach_out
+    - gesture_bow_down
+    - gesture_sky_punch
+    - gesture_reach_human
+    - gesture_neutral
+
+  jazz_hands:           # rapid snappy direction changes — excited dance energy
+    - gesture_neutral
+    - gesture_left_high
+    - gesture_3_oclock
+    - gesture_sky_punch
+    - gesture_9_oclock
+    - gesture_right_high
+    - gesture_neutral
+
+  conductor:            # conducting an orchestra — sweeping arcs with presence
+    - gesture_neutral
+    - gesture_sky_left
+    - gesture_reach_out
+    - gesture_left_high
+    - gesture_right_high
+    - gesture_toward_human
+    - gesture_neutral
+
+  deep_thought:         # slow contemplative — robot introspecting quietly
+    - gesture_neutral
+    - gesture_think_high
+    - gesture_think_side
+    - gesture_wonder_a
+    - gesture_think_high
+    - gesture_wonder_c
+    - gesture_think_side
+    - gesture_neutral
+

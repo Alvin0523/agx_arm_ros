@@ -13,10 +13,10 @@ robot:
 
 # ─── MoveIt planner settings ─────────────────────────────────────────────────
 planner:
-  num_planning_attempts:           3       # retries with new random seed on timeout
-  allowed_planning_time:           5.0     # seconds per attempt
-  max_velocity_scaling_factor:     0.6
-  max_acceleration_scaling_factor: 0.5
+  num_planning_attempts:           10       # retries with new random seed on timeout
+  allowed_planning_time:           10.0     # seconds per attempt
+  max_velocity_scaling_factor:     0.5
+  max_acceleration_scaling_factor: 0.4
   workspace:                               # TCP bounding box in base_link frame (metres)
     min: [ 0.10, -0.20, 0.10]             # covers all slot poses + hover headroom
     max: [ 0.55,  0.25, 0.40]             # x:arm reach, y:side reach, z:hover height
@@ -27,7 +27,7 @@ planner:
 constraints:
   position_tolerance:    0.001   # metres
   orientation_tolerance: 0.003   # radians per axis
-  hover_position_tolerance:    0.005
+  hover_position_tolerance:    0.02
   hover_orientation_tolerance: 0.05
 
 
@@ -37,4 +37,4 @@ gripper:
   open_width:   0.03      # metres
   close_width:  0.018     # metres
   effort:       1.0       # Newtons
-  move_time:    0.5       # seconds to wait after commanding gripper
+  move_time:    1.0       # seconds to wait after commanding gripper

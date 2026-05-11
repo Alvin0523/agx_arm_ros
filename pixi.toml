@@ -63,7 +63,7 @@ numpy = "<2"
 
 
 [pypi-dependencies]
-pyAgxArm = { path = "../pyAgxArm", editable = true }
+pyAgxArm = { path = "../../../pyAgxArm", editable = true }
 acconeer-exptool = ">=7.2.0, <8"
 zensical = "*"
 
@@ -77,8 +77,7 @@ moveit = {cmd = "ros2 launch agx_arm_ctrl start_single_agx_arm_moveit.launch.py 
 rviz   = {cmd = "ros2 launch agx_arm_ctrl start_single_agx_arm_rviz.launch.py can_port:=can2 arm_type:=piper follow:=true control:=true", description = "arm with rviz (no MoveIt)"}
 
 # Task(Pick & Place)
-main  = { cmd = "python3 ai_film/main.py --config ai_film/config/moveit.yaml ai_film/config/chess.yaml --gestures ai_film/config/gestures.yaml --sequence chess_loop", description = "run main.py (sensor-driven chess loop)" }
-chess = { cmd = "python3 ai_film/main.py --config ai_film/config/moveit.yaml ai_film/config/chess.yaml --sequence chess_loop", description = "chess loop (no sensor)" }
+main  = { cmd = "python3 ai_film/main.py --config ai_film/config/moveit.yaml ai_film/config/chess.yaml --gestures ai_film/config/gestures.yaml", description = "run main.py — interactive sequence picker (pass --sequence NAME to skip menu)" }
 
 # Utils
 foxglove = {cmd = "ros2 launch foxglove_bridge foxglove_bridge_launch.xml", description = "Foxglove bridge (ws://localhost:8765)"}

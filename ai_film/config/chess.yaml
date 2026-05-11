@@ -11,36 +11,80 @@
 # All orientations use qy=1 (TCP pointing straight down — standard pick pose).
 
 poses:
-  top_left:
-    x:  0.331
-    y:  0.010
+  # ── White chess board (2×2, 5 cm pitch) ──────────────────────────────────
+  #   white_tl  white_tr      (+x = further from robot, +y = left)
+  #   white_bl  white_br      ← white_br measured from /feedback/tcp_pose
+
+  white_tl:
+    x:  0.299
+    y:  0.155
     z:  0.150
     qx: 0.0
     qy: 1.0
     qz: 0.0
     qw: 0.0
 
-  top_right:
-    x:  0.331
-    y: -0.040
+  white_tr:
+    x:  0.299
+    y:  0.105
     z:  0.150
     qx: 0.0
     qy: 1.0
     qz: 0.0
     qw: 0.0
 
-  bottom_left:
-    x:  0.281
-    y:  0.010
+  white_bl:
+    x:  0.249
+    y:  0.155
     z:  0.150
     qx: 0.0
     qy: 1.0
     qz: 0.0
     qw: 0.0
 
-  bottom_right:
-    x:  0.281
-    y: -0.040
+  white_br:
+    x:  0.249
+    y:  0.105
+    z:  0.150
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  # ── Black chess board (2×2, 5 cm pitch) ──────────────────────────────────
+  #   black_tl  black_tr      (+x = further from robot, +y = left)
+  #   black_bl  black_br      ← black_bl measured from /feedback/tcp_pose
+
+  black_tl:
+    x:  0.297
+    y: -0.114
+    z:  0.150
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  black_tr:
+    x:  0.297
+    y: -0.164
+    z:  0.150
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  black_bl:
+    x:  0.247
+    y: -0.114
+    z:  0.150
+    qx: 0.0
+    qy: 1.0
+    qz: 0.0
+    qw: 0.0
+
+  black_br:
+    x:  0.247
+    y: -0.164
     z:  0.150
     qx: 0.0
     qy: 1.0
@@ -142,8 +186,8 @@ poses:
 # Only set the axes you need — omitted axes default to 0.0.
 
 offsets:
-  offset1:          # straight vertical hover (most common)
-    z_offset: 0.08
+  offset1:          # straight vertical hover (most common), too high will have error
+    z_offset: 0.05
 
   offset2:          # taller vertical hover
     z_offset: 0.15
@@ -157,36 +201,8 @@ offsets:
 
 sequences:
 
-  2x2_loop:
-    loop: true
-    steps:
-      - type: pick_place
-        pick:         top_left
-        place:        top_right
-        pick_offset:  offset1
-        place_offset: offset1
-
-      - type: pick_place
-        pick:         bottom_right
-        place:        bottom_left
-        pick_offset:  offset1
-        place_offset: offset1
-
-      - type: pick_place
-        pick:         top_right
-        place:        bottom_right
-        pick_offset:  offset1
-        place_offset: offset1
-
-      - type: pick_place
-        pick:         bottom_left
-        place:        top_left
-        pick_offset:  offset1
-        place_offset: offset1
-
-      - type: home
-
-  chess_loop:
+  piper1:
+    label: "piper1 (event)"
     loop: true
     steps:
       # Slot layout:
@@ -250,4 +266,118 @@ sequences:
         pick_offset:  offset1
         place_offset: offset1
 
+      - type: home
+
+  piper2:
+    label: "piper2 (event)"
+    loop: true
+    steps:
+      - type: pick_place
+        pick:         white_tl
+        place:        black_tl
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         black_br
+        place:        white_br
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: gesture
+
+      - type: pick_place
+        pick:         black_tl
+        place:        white_tl
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         white_br
+        place:        black_br
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: home
+
+  piper2_white:
+    label: "piper2_white (test)"
+    loop: true
+    steps:
+      - type: pick_place
+        pick:         white_tl
+        place:        white_tr
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         white_tr
+        place:        white_bl
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         white_bl
+        place:        white_br
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         white_br
+        place:        white_tl
+        pick_offset:  offset1
+        place_offset: offset1
+
+  piper2_black:
+    label: "piper2_black (test)"
+    loop: true
+    steps:
+      - type: pick_place
+        pick:         black_tl
+        place:        black_tr
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         black_tr
+        place:        black_bl
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         black_bl
+        place:        black_br
+        pick_offset:  offset1
+        place_offset: offset1
+
+      - type: pick_place
+        pick:         black_br
+        place:        black_tl
+        pick_offset:  offset1
+        place_offset: offset1
+
+  gesture_showcase:
+    label: "gesture_showcase (test)"
+    loop: false
+    steps:
+      - type: gesture
+        name: big_wave
+      - type: gesture
+        name: beckon_human
+      - type: gesture
+        name: robot_thinking
+      - type: gesture
+        name: point_sky
+      - type: gesture
+        name: wander
+      - type: gesture
+        name: clock_sweep
+      - type: gesture
+        name: show_off
+      - type: gesture
+        name: jazz_hands
+      - type: gesture
+        name: conductor
+      - type: gesture
+        name: deep_thought
       - type: home
