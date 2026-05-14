@@ -23,6 +23,7 @@ def _launch(context):
     move_group_configuration = {
         "publish_robot_description_semantic": True,
         "allow_trajectory_execution": LaunchConfiguration("allow_trajectory_execution"),
+        "trajectory_execution.allowed_start_tolerance": 0.02,
         "capabilities": ParameterValue(
             LaunchConfiguration("capabilities"), value_type=str
         ),
